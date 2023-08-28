@@ -1,5 +1,6 @@
 .header {
   width: 100%;
+  color: #fff;
 }
 
 .header__logo {
@@ -74,4 +75,5 @@
 .header__button_type_signin {
   padding: 8px 20px;
   background-color: #2be080;
+  color: #000;
 }
