@@ -1,6 +1,7 @@
 /* Общие стили */
 @import url(./vendor/normalize.css);
 @import url(./vendor/fonts/Inter/inter.css);
+@import url(./common-link.css);
 
 body {
   background-color: #e5e5e5;
