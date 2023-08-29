@@ -1,0 +1,10 @@
+.header__profile-button {
+  width: 100px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  background-image: url(../../../images/header/profile.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+}

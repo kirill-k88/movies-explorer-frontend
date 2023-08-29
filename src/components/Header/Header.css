@@ -1,6 +1,7 @@
 .header {
   width: 100%;
   color: #fff;
+  position: relative;
 }
 
 .header__logo {
@@ -16,64 +17,20 @@
   align-items: center;
 }
 
-.header__menu {
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-}
-
-.header__menu_hidden {
-  display: none;
-}
-
-.header__link {
-  margin: 0;
-  padding: 0;
-  text-decoration: none;
-  color: #fff;
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 18px;
-}
 .header__button-container {
   display: flex;
   flex-direction: row;
-  justify-content: end;
-}
-.header__profile-button {
-  padding: 0;
-  border: none;
-  background-color: transparent;
+  justify-content: flex-end;
 }
 
-.header__profile-button_hidden {
-  display: none;
+@media screen and (max-width: 768px) {
+  .header__container {
+    margin: 18px 30px;
+  }
 }
 
-.header__loginContainer {
-  display: flex;
-  flex-direction: row;
-  gap: 30px;
-  align-items: center;
-}
-
-.header__loginContainer_hidden {
-  display: none;
-}
-
-.header__button {
-  margin: 0;
-  padding: 0;
-  text-decoration: none;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 16px;
-}
-
-.header__button_type_signin {
-  padding: 8px 20px;
-  background-color: #2be080;
-  color: #000;
+@media screen and (max-width: 500px) {
+  .header__container {
+    margin: 18px 14px;
+  }
 }

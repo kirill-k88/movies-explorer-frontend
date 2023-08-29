@@ -16,17 +16,16 @@
   letter-spacing: 0px;
   text-align: center;
 }
+
 .footer__container {
   margin: 0 70px;
   padding: 20px 0;
   max-width: 100%;
   border-top: 1px solid #e8e8e8;
   color: #000;
-  font-feature-settings: 'clig' off, 'liga' off;
   font-size: 13px;
-  font-style: normal;
   font-weight: 400;
-  line-height: normal;
+  line-height: 16px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -41,10 +40,42 @@
 .footer__copyright {
   margin: 0;
   padding: 0;
+  color: #a0a0a0;
 }
 
 .footer__link {
   margin: 0;
   padding: 0;
   text-decoration: none;
+}
+
+@media screen and (max-width: 768px) {
+  .footer__container {
+    margin: 0 30px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .footer__description {
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+  }
+
+  .footer__container {
+    margin: 0 10px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    font-size: 12px;
+    line-height: 15px;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .footer__links {
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 30px;
+  }
 }
