@@ -3,7 +3,7 @@ import './HeaderLoginContainer.css';
 
 function HeaderLoginContainer() {
   return (
-    <div className="header__loginContainer">
+    <div className="header__login-container">
       <Link
         className="header__button header__button_type_signup common-link"
         to="/signup">

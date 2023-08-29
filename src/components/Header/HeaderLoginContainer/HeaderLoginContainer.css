@@ -1,4 +1,4 @@
-.header__loginContainer {
+.header__login-container {
   display: flex;
   flex-direction: row;
   gap: 30px;
@@ -23,7 +23,7 @@
 }
 
 @media screen and (max-width: 500px) {
-  .header__loginContainer {
+  .header__login-container {
     gap: 14px;
   }
 

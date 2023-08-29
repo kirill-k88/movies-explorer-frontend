@@ -1,9 +1,10 @@
-import { Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import { useEffect, useState } from 'react';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
+import Main from '../Main/Main';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -17,7 +18,12 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
         <Header />
-        <Routes></Routes>
+        <Routes>
+          <Route
+            path="/main"
+            element={<Main />}
+          />
+        </Routes>
         <Footer />
       </div>
     </CurrentUserContext.Provider>
