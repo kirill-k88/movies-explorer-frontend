@@ -95,7 +95,7 @@
     margin: 0 50px;
   }
   .about-project__container {
-    margin: 23px 50px 0;
+    margin: 21px 50px 0;
   }
   .about-project__article {
     max-width: 319px;
@@ -106,7 +106,7 @@
     line-height: 18px;
   }
   .about-project__table {
-    margin: 93px 50px 90px;
+    margin: 93px 50px 77px;
   }
   .about-project__table-row_type_second {
     font-weight: 400;
@@ -142,7 +142,13 @@
     line-height: 16px;
   }
   .about-project__table {
-    margin: 60px 18px 69px;
+    margin: 60px 18px 62px;
+  }
+  .about-project__table-cell_type_color-first {
+    width: 35%;
+  }
+  .about-project__table-cell_type_color-second {
+    width: 65%;
   }
   .about-project__table-row_type_first {
     font-size: 11px;
@@ -151,5 +157,6 @@
   .about-project__table-row_type_second {
     font-size: 11px;
     line-height: 13px;
+    height: 30px;
   }
 }

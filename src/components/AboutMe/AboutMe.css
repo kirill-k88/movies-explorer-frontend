@@ -123,6 +123,8 @@
   }
   .about-me__header {
     margin: 0 14px;
+    font-size: 18px;
+    line-height: 22px;
   }
   .about-me__container {
     margin: 28px 14px 0;
