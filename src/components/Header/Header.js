@@ -1,4 +1,4 @@
-import logo from '../../images/header/logo.svg';
+import logo from '../../images/header/logo.jpg';
 import './Header.css';
 import HeaderNavi from './HeaderNavi/HeaderNavi';
 import HeaderLoginContainer from './HeaderLoginContainer/HeaderLoginContainer';
@@ -28,14 +28,11 @@ function Header() {
     <header
       className={`header ${
         location.pathname === '/main' ? 'header_type_blue' : 'header_type_white'
-      }`}>
+      }`}
+    >
       <div className="header__container">
         <Link to="/main">
-          <img
-            className="header__logo common-button"
-            src={logo}
-            alt="Лого"
-          />
+          <img className="header__logo common-button" src={logo} alt="Лого" />
         </Link>
         {currentUser.name && size[0] > 768 && <HeaderNavi />}
         <div className="header__button-container">

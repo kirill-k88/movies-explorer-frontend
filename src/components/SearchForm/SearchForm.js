@@ -43,7 +43,7 @@ function SearchForm() {
         <div className="search-form__checkbox-container">
           <button className="search-form__checkbox" onClick={onCheckBoxClick}>
             <img
-              className="search-form__checkbox"
+              className="search-form__checkbox common-button"
               src={isShortMovie ? smalltumb : smalltumboff}
               alt="чекбокс"
             />
