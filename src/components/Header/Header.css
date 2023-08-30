@@ -1,7 +1,14 @@
 .header {
   width: 100%;
-  background-color: #465dff;
   position: relative;
+}
+
+.header_type_white {
+  background-color: #fff;
+}
+
+.header_type_blue {
+  background-color: #465dff;
 }
 
 .header__logo {

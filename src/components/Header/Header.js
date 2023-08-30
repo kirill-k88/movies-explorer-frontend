@@ -7,11 +7,12 @@ import HeaderMenu from './HeaderMenu/HeaderMenu';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import { useContext, useLayoutEffect } from 'react';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function Header() {
   const currentUser = useContext(CurrentUserContext);
   const [size, setSize] = useState([0, 0]);
+  const location = useLocation();
 
   useLayoutEffect(() => {
     function updateSize() {
@@ -24,7 +25,10 @@ function Header() {
   }, []);
 
   return (
-    <header className="header">
+    <header
+      className={`header ${
+        location.pathname === '/main' ? 'header_type_blue' : 'header_type_white'
+      }`}>
       <div className="header__container">
         <Link to="/main">
           <img

@@ -14,9 +14,16 @@
   margin: 0;
   padding: 0;
   text-decoration: none;
-  color: #fff;
   font-size: 13px;
   font-style: normal;
   font-weight: 500;
   line-height: 18px;
+}
+
+.header__link_type_white {
+  color: #fff;
+}
+
+.header__link_type_black {
+  color: #000;
 }

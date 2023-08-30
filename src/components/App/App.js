@@ -5,12 +5,13 @@ import { useEffect, useState } from 'react';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
+import Movies from '../Movies/Movies';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
-    /* setCurrentUser({ name: 'Me' }); */
+    setCurrentUser({ name: 'Me' });
     // eslint-disable-next-line
   }, []);
 
@@ -22,6 +23,10 @@ function App() {
           <Route
             path="/main"
             element={<Main />}
+          />
+          <Route
+            path="/movies"
+            element={<Movies />}
           />
         </Routes>
         <Footer />
