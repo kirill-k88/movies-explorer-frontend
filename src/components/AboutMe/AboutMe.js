@@ -1,5 +1,5 @@
 import './AboutMe.css';
-import React from 'react';
+import avatar from '../../images/main/aboutme/avatar.jpg';
 
 function AboutMe() {
   return (
@@ -15,11 +15,20 @@ function AboutMe() {
             в компании «СКБ Контур». После того, как прошёл курс по веб-разработке, начал заниматься
             фриланс-заказами и ушёл с постоянной работы.
           </p>
-          <a href="https://github.com/kirill-k88" className="about-me__link">
+          <a
+            href="https://github.com/kirill-k88"
+            className="about-me__link common-link"
+            target="_blank"
+            rel="noopener noreferrer">
             Github
           </a>
         </article>
-        <img className="about-me__photo"></img>
+        <img
+          className="about-me__photo"
+          src={avatar}
+          alt="Аватар"
+          target="_blank"
+          rel="noopener noreferrer"></img>
       </div>
     </section>
   );

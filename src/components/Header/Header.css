@@ -1,6 +1,6 @@
 .header {
   width: 100%;
-  color: #fff;
+  background-color: #465dff;
   position: relative;
 }
 
@@ -10,7 +10,9 @@
 }
 
 .header__container {
-  margin: 18px 70px;
+  margin: 0 70px;
+  padding-bottom: 18px;
+  padding-top: 18px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -25,12 +27,12 @@
 
 @media screen and (max-width: 768px) {
   .header__container {
-    margin: 18px 30px;
+    margin: 0 30px;
   }
 }
 
 @media screen and (max-width: 500px) {
   .header__container {
-    margin: 18px 14px;
+    margin: 0 14px;
   }
 }

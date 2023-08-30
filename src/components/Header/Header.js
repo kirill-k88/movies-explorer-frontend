@@ -7,6 +7,7 @@ import HeaderMenu from './HeaderMenu/HeaderMenu';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import { useContext, useLayoutEffect } from 'react';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Header() {
   const currentUser = useContext(CurrentUserContext);
@@ -25,11 +26,13 @@ function Header() {
   return (
     <header className="header">
       <div className="header__container">
-        <img
-          className="header__logo"
-          src={logo}
-          alt="Лого"
-        />
+        <Link to="/main">
+          <img
+            className="header__logo common-button"
+            src={logo}
+            alt="Лого"
+          />
+        </Link>
         {currentUser.name && size[0] > 768 && <HeaderNavi />}
         <div className="header__button-container">
           {currentUser.name ? (

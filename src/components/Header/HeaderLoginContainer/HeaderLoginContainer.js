@@ -5,12 +5,12 @@ function HeaderLoginContainer() {
   return (
     <div className="header__login-container">
       <Link
-        className="header__button header__button_type_signup common-link"
+        className="header__button header__button_type_signup-wite"
         to="/signup">
         Регистрация
       </Link>
       <Link
-        className="header__button header__button_type_signin common-link"
+        className="header__button header__button_type_signin"
         to="/signin">
         Войти
       </Link>

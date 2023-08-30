@@ -10,7 +10,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
-    setCurrentUser({ name: 'Me' });
+    /* setCurrentUser({ name: 'Me' }); */
     // eslint-disable-next-line
   }, []);
 

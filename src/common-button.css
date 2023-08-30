@@ -1,0 +1,8 @@
+.common-button {
+  transition: opacity 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.common-button:hover {
+  opacity: 0.8;
+}

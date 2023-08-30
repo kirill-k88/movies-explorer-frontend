@@ -1,14 +1,14 @@
 .promo {
-  min-height: 524px;
+  min-height: 520px;
   background-color: #465dff;
   display: flex;
   justify-content: center;
-  align-items: center;
   position: relative;
 }
 
 .promo__header {
   margin: 0;
+  margin-top: 180px;
   padding: 0;
   max-width: 730px;
   font-size: 50px;
@@ -21,6 +21,7 @@
 
 .promo__image {
   position: absolute;
+  top: 80px;
   width: 320px;
   height: 320px;
 }

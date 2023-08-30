@@ -20,7 +20,7 @@
 
 .about-project__container {
   border-top: 1px solid #000;
-  margin: 23px 70px 0;
+  margin: 21px 70px 0;
   padding-top: 70px;
   display: flex;
   justify-content: space-between;
@@ -52,15 +52,11 @@
 }
 
 .about-project__table {
-  margin: 110px 70px;
+  margin: 110px 70px 97px;
   text-align: center;
   vertical-align: middle;
   border-collapse: collapse;
   border: none;
-}
-
-.about-project__table-row {
-  height: 36px;
 }
 
 .about-project__table-row_type_first {
@@ -68,6 +64,7 @@
   font-weight: 400;
   line-height: 17px;
   letter-spacing: 0px;
+  height: 36px;
 }
 
 .about-project__table-row_type_second {
@@ -77,7 +74,7 @@
   letter-spacing: 0px;
   text-align: center;
   color: #a0a0a0;
-  height: 36px;
+  height: 45px;
 }
 
 .about-project__table-cell_type_color-first {

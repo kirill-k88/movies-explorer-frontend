@@ -50,6 +50,10 @@
 }
 
 @media screen and (max-width: 768px) {
+  .footer {
+    background-color: #fff;
+  }
+
   .footer__container {
     margin: 0 30px;
   }

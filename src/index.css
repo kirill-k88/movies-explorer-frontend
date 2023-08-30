@@ -2,11 +2,11 @@
 @import url(./vendor/normalize.css);
 @import url(./vendor/fonts/Inter/inter.css);
 @import url(./common-link.css);
+@import url(./common-button.css);
 
 body {
   background-color: #e5e5e5;
   color: #000;
-  margin: 0 auto;
   font-family: 'Inter', Arial, sans-serif;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;

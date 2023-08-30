@@ -13,6 +13,9 @@
   font-style: normal;
   font-weight: 500;
   line-height: 16px;
+
+  transition: opacity 0.5s ease-in-out;
+  cursor: pointer;
 }
 
 .header__button_type_signin {
@@ -20,6 +23,18 @@
   background-color: #2be080;
   color: #000;
   border-radius: 3px;
+}
+
+.header__button_type_signup-black {
+  color: #000;
+}
+
+.header__button_type_signup-wite {
+  color: #fff;
+}
+
+.header__button:hover {
+  opacity: 0.8;
 }
 
 @media screen and (max-width: 500px) {
