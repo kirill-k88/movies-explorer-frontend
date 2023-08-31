@@ -8,21 +8,21 @@ function NaviTab() {
         <li className="navi-tab__line">
           <a
             className="navi-tab__link common-link"
-            href="1">
+            href="#about-project">
             О проекте
           </a>
         </li>
         <li className="navi-tab__line">
           <a
             className="navi-tab__link common-link"
-            href="2">
+            href="#techs">
             Технологии
           </a>
         </li>
         <li className="navi-tab__line">
           <a
             className="navi-tab__link common-link"
-            href="3">
+            href="#about-me">
             Студент
           </a>
         </li>

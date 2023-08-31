@@ -43,7 +43,9 @@ function SearchForm() {
         </div>
         <div className="search-form__checkbox-container">
           <button
-            className={`search-form__checkbox ${isShortMovie && 'search-form__checkbox_checked'}`}
+            className={`search-form__checkbox ${
+              isShortMovie && 'search-form__checkbox_checked'
+            } common-button`}
             onClick={onCheckBoxClick}></button>
           <p className="search-form__checkbox-label">Короткометражки</p>
         </div>
