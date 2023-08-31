@@ -33,13 +33,22 @@
   background-color: transparent;
   width: 16px;
   height: 18px;
-  background-image: url('../../images/card/nolike.svg');
   background-position: center -3px;
   background-size: 175%;
 }
 
-.movie-card__button-like_isliked {
+.movie-card__button-like_type_dislike {
   background-image: url('../../images/card/like.svg');
+}
+
+.movie-card__button-like_type_like {
+  background-image: url('../../images/card/nolike.svg');
+}
+
+.movie-card__button-like_type_remove {
+  background-image: url('../../images/card/cross.svg');
+  background-position: center center;
+  background-size: 100%;
 }
 
 .movie-card__description {
