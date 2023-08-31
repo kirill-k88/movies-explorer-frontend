@@ -8,13 +8,14 @@ import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
+import Profile from '../Profile/Profile';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [size, setSize] = useState([0, 0]);
 
   useEffect(() => {
-    setCurrentUser({ name: 'Me' });
+    setCurrentUser({ name: 'Kirill', email: 'kirill@ya.ru' });
     // eslint-disable-next-line
   }, []);
 
@@ -32,22 +33,43 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <WindowSizeContext.Provider value={size}>
         <div className="app">
-          <Header />
           <Routes>
             <Route
               path="/main"
-              element={<Main />}
+              element={
+                <>
+                  <Header /> <Main /> <Footer />
+                </>
+              }
             />
             <Route
               path="/movies"
-              element={<Movies />}
+              element={
+                <>
+                  <Header />
+                  <Movies /> <Footer />
+                </>
+              }
             />
             <Route
               path="/saved-movies"
-              element={<SavedMovies />}
+              element={
+                <>
+                  <Header />
+                  <SavedMovies /> <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <>
+                  <Header />
+                  <Profile />
+                </>
+              }
             />
           </Routes>
-          <Footer />
         </div>
       </WindowSizeContext.Provider>
     </CurrentUserContext.Provider>
