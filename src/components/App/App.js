@@ -15,7 +15,7 @@ function App() {
   const [size, setSize] = useState([0, 0]);
 
   useEffect(() => {
-    setCurrentUser({ name: 'Kirill', email: 'kirill@ya.ru' });
+    setCurrentUser({ name: 'Кирилл', email: 'kirill@ya.ru' });
     // eslint-disable-next-line
   }, []);
 

@@ -1,0 +1,136 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 74px 70px 70px;
+  background-color: #fff;
+}
+
+.profile__header {
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 29px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+
+.profile__form {
+  margin-top: 123px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile__input-container {
+  position: relative;
+  min-width: 410px;
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.profile__input-container_withBorder {
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.profile__input {
+  border: none;
+  min-width: 200px;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 13px;
+  letter-spacing: 0px;
+  text-align: right;
+}
+
+.profile__input:focus {
+  outline: none;
+}
+
+.profile__error {
+  color: red;
+  max-width: 200px;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 13px;
+  letter-spacing: 0px;
+  text-align: right;
+}
+
+.profile__text {
+  margin: 0;
+  padding: 0;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 13px;
+  letter-spacing: 0px;
+  text-align: left;
+  position: absolute;
+  top: 16px;
+  left: 0;
+}
+
+.profile__button-edit {
+  margin-top: 220px;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0px;
+  text-align: center;
+  border: none;
+  background-color: transparent;
+}
+
+.profile__button-exit {
+  margin-top: 16px;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #ee3465;
+  border: none;
+  background-color: transparent;
+}
+
+@media screen and (max-width: 768px) {
+  .profile {
+    padding: 236px 30px 269px;
+    background-color: #fff;
+  }
+  .profile__form {
+    margin-top: 96px;
+  }
+  .profile__button-edit {
+    margin-top: 210px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .profile {
+    padding: 70px 14px 40px;
+    background-color: #fff;
+  }
+  .profile__form {
+    margin-top: 80px;
+  }
+  .profile__input-container {
+    min-width: 290px;
+  }
+
+  .profile__button-edit {
+    margin-top: 380px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .profile__button-exit {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
