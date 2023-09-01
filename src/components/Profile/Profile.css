@@ -32,7 +32,7 @@
   align-items: flex-end;
 }
 
-.profile__input-container_withBorder {
+.register__input-container_bordered {
   border-bottom: 1px solid #e8e8e8;
 }
 
@@ -101,7 +101,6 @@
 @media screen and (max-width: 768px) {
   .profile {
     padding: 230px 30px 269px;
-    background-color: #fff;
   }
   .profile__form {
     margin-top: 80px;
@@ -114,7 +113,6 @@
 @media screen and (max-width: 500px) {
   .profile {
     padding: 65px 14px 40px;
-    background-color: #fff;
   }
   .profile__form {
     margin-top: 65px;

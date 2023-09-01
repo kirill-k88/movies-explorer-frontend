@@ -9,13 +9,14 @@ import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
+import Register from '../Register/Register';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [size, setSize] = useState([0, 0]);
 
   useEffect(() => {
-    setCurrentUser({ name: 'Виталий', email: 'kirill@ya.ru' });
+    /* setCurrentUser({ name: 'Виталий', email: 'kirill@ya.ru' }); */
     // eslint-disable-next-line
   }, []);
 
@@ -66,6 +67,14 @@ function App() {
                 <>
                   <Header />
                   <Profile />
+                </>
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                <>
+                  <Register />
                 </>
               }
             />

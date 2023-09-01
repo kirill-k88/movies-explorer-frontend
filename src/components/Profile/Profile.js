@@ -35,7 +35,7 @@ function Profile() {
       <form
         className="profile__form"
         onSubmit={handleSubmit(onEdit)}>
-        <div className="profile__input-container  profile__input-container_withBorder">
+        <div className="profile__input-container  register__input-container_bordered">
           <input
             className="profile__input"
             type="text"
