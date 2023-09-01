@@ -14,7 +14,6 @@ function Register() {
   });
 
   function onEdit(data) {
-    /* evt.preventDefault(); */
     console.log(data, errors);
   }
 

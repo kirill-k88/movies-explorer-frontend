@@ -1,9 +1,11 @@
 import { useForm } from 'react-hook-form';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './Profile.css';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 function Profile() {
+  const [enableEdit, setEnableEdit] = useState(false);
+  const [apiError, setApiError] = useState('');
   const currentUser = useContext(CurrentUserContext);
   const {
     register,
@@ -20,13 +22,58 @@ function Profile() {
     // eslint-disable-next-line
   }, [currentUser]);
 
-  function onEdit(data) {
-    /* evt.preventDefault(); */
-    console.log(data, errors);
+  function onEditButtonClick(data) {
+    setEnableEdit(true);
   }
 
   function onExit(evt) {
     evt.preventDefault();
+  }
+
+  function onSubmit(data) {
+    setApiError('При обновлении профиля произошла ошибка.');
+    //временно, до подключения API
+    setTimeout(function () {
+      setApiError('');
+      setEnableEdit(false);
+    }, 2000);
+  }
+
+  function showSaveButton() {
+    if (enableEdit) {
+      return (
+        <div className="profile__button-save-container">
+          {apiError && <span className="profile__api-error">{apiError}</span>}
+          <button
+            className="profile__button-save common-button"
+            type="submit"
+            disabled={!isValid}>
+            Сохранить
+          </button>
+        </div>
+      );
+    }
+  }
+
+  function showEditButton() {
+    if (!enableEdit) {
+      return (
+        <>
+          <button
+            className="profile__button-edit common-button"
+            type="button"
+            onClick={onEditButtonClick}>
+            Редактировать
+          </button>
+          <button
+            className="profile__button-exit common-button"
+            type="button"
+            onClick={onExit}>
+            Выйти из аккаунта
+          </button>
+        </>
+      );
+    }
   }
 
   return (
@@ -34,11 +81,12 @@ function Profile() {
       <h1 className="profile__header">{`Привет, ${currentUser.name}!`}</h1>
       <form
         className="profile__form"
-        onSubmit={handleSubmit(onEdit)}>
+        onSubmit={handleSubmit(onSubmit)}>
         <div className="profile__input-container  register__input-container_bordered">
           <input
             className="profile__input"
             type="text"
+            disabled={!enableEdit && true}
             placeholder="Имя"
             {...register('nameField', {
               required: 'Поле не может быть пустым.',
@@ -65,6 +113,7 @@ function Profile() {
             type="text"
             id="email"
             name="email"
+            disabled={!enableEdit && true}
             placeholder="E-mail"
             {...register('emailField', {
               required: 'Поле не может быть пустым.',
@@ -79,18 +128,8 @@ function Profile() {
           )}
           <p className="profile__text">E-mail</p>
         </div>
-        <button
-          className="profile__button-edit common-button"
-          type="submit"
-          disabled={!isValid}>
-          Редактировать
-        </button>
-        <button
-          className="profile__button-exit common-button"
-          type="button"
-          onClick={onExit}>
-          Выйти из аккаунта
-        </button>
+        {showEditButton()}
+        {showSaveButton()}
       </form>
     </section>
   );
