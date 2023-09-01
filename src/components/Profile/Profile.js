@@ -39,43 +39,6 @@ function Profile() {
     }, 2000);
   }
 
-  function showSaveButton() {
-    if (enableEdit) {
-      return (
-        <div className="profile__button-save-container">
-          {apiError && <span className="profile__api-error">{apiError}</span>}
-          <button
-            className="profile__button-save common-button"
-            type="submit"
-            disabled={!isValid}>
-            Сохранить
-          </button>
-        </div>
-      );
-    }
-  }
-
-  function showEditButton() {
-    if (!enableEdit) {
-      return (
-        <>
-          <button
-            className="profile__button-edit common-button"
-            type="button"
-            onClick={onEditButtonClick}>
-            Редактировать
-          </button>
-          <button
-            className="profile__button-exit common-button"
-            type="button"
-            onClick={onExit}>
-            Выйти из аккаунта
-          </button>
-        </>
-      );
-    }
-  }
-
   return (
     <section className="profile">
       <h1 className="profile__header">{`Привет, ${currentUser.name}!`}</h1>
@@ -128,8 +91,33 @@ function Profile() {
           )}
           <p className="profile__text">E-mail</p>
         </div>
-        {showEditButton()}
-        {showSaveButton()}
+        {enableEdit && (
+          <div className="profile__button-save-container">
+            {apiError && <span className="profile__api-error">{apiError}</span>}
+            <button
+              className="profile__button-save common-button"
+              type="submit"
+              disabled={!isValid}>
+              Сохранить
+            </button>
+          </div>
+        )}
+        {!enableEdit && (
+          <>
+            <button
+              className="profile__button-edit common-button"
+              type="button"
+              onClick={onEditButtonClick}>
+              Редактировать
+            </button>
+            <button
+              className="profile__button-exit common-button"
+              type="button"
+              onClick={onExit}>
+              Выйти из аккаунта
+            </button>
+          </>
+        )}
       </form>
     </section>
   );
