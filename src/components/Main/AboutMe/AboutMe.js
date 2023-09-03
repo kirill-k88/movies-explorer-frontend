@@ -1,11 +1,9 @@
 import './AboutMe.css';
-import avatar from '../../images/main/aboutme/avatar.jpg';
+import avatar from '../../../images/main/aboutme/avatar.jpg';
 
 function AboutMe() {
   return (
-    <section
-      className="about-me"
-      id="about-me">
+    <section className="about-me" id="about-me">
       <h2 className="about-me__header">Студент</h2>
       <div className="about-me__container">
         <article className="about-me__article">
@@ -21,7 +19,8 @@ function AboutMe() {
             href="https://github.com/kirill-k88"
             className="about-me__link common-link"
             target="_blank"
-            rel="noopener noreferrer">
+            rel="noopener noreferrer"
+          >
             Github
           </a>
         </article>
@@ -30,7 +29,8 @@ function AboutMe() {
           src={avatar}
           alt="Аватар"
           target="_blank"
-          rel="noopener noreferrer"></img>
+          rel="noopener noreferrer"
+        ></img>
       </div>
     </section>
   );

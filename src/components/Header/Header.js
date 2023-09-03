@@ -1,8 +1,8 @@
 import logo from '../../images/header/logo.svg';
 import './Header.css';
-import HeaderNavi from './HeaderNavi/HeaderNavi';
+import Navigation from '../Navigation/Navigation';
 import HeaderLoginContainer from './HeaderLoginContainer/HeaderLoginContainer';
-import HeaderProfile from './HeaderProfile/HeaderProfile';
+import ProfileButton from '../ProfileButton/ProfileButton';
 import HeaderMenu from './HeaderMenu/HeaderMenu';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import { WindowSizeContext } from '../../contexts/WindowSizeContext.js';
@@ -10,7 +10,7 @@ import { useContext } from 'react';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-function Header() {
+function Header({ headerMenuButtonHandler }) {
   const currentUser = useContext(CurrentUserContext);
   const size = useContext(WindowSizeContext);
   const location = useLocation();
@@ -19,22 +19,19 @@ function Header() {
     <header
       className={`header ${
         location.pathname === '/main' ? 'header_type_blue' : 'header_type_white'
-      }`}>
+      }`}
+    >
       <div className="header__container">
         <Link to="/main">
-          <img
-            className="header__logo common-button"
-            src={logo}
-            alt="Лого"
-          />
+          <img className="header__logo common-button" src={logo} alt="Лого" />
         </Link>
-        {currentUser.name && size[0] > 768 && <HeaderNavi />}
+        {currentUser.name && size[0] > 768 && <Navigation />}
         <div className="header__button-container">
           {currentUser.name ? (
             size[0] > 768 ? (
-              <HeaderProfile />
+              <ProfileButton />
             ) : (
-              <HeaderMenu />
+              <HeaderMenu headerMenuButtonHandler={headerMenuButtonHandler} />
             )
           ) : (
             <HeaderLoginContainer />

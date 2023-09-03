@@ -12,10 +12,20 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
+import MenuPopup from '../MenuPopup/MenuPopup';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [size, setSize] = useState([0, 0]);
+  const [isMenuPopupVisible, setIsMenuPopupVisible] = useState(false);
+
+  function menuPopupCloseButtonHandler() {
+    setIsMenuPopupVisible(false);
+  }
+
+  function headerMenuButtonHandler() {
+    setIsMenuPopupVisible(true);
+  }
 
   useEffect(() => {
     setCurrentUser({ name: 'Виталий', email: 'kirill@ya.ru' });
@@ -41,7 +51,7 @@ function App() {
               path="/main"
               element={
                 <>
-                  <Header /> <Main /> <Footer />
+                  <Header headerMenuButtonHandler={headerMenuButtonHandler} /> <Main /> <Footer />
                 </>
               }
             />
@@ -49,7 +59,7 @@ function App() {
               path="/movies"
               element={
                 <>
-                  <Header />
+                  <Header headerMenuButtonHandler={headerMenuButtonHandler} />
                   <Movies /> <Footer />
                 </>
               }
@@ -58,7 +68,7 @@ function App() {
               path="/saved-movies"
               element={
                 <>
-                  <Header />
+                  <Header headerMenuButtonHandler={headerMenuButtonHandler} />
                   <SavedMovies /> <Footer />
                 </>
               }
@@ -67,7 +77,7 @@ function App() {
               path="/profile"
               element={
                 <>
-                  <Header />
+                  <Header headerMenuButtonHandler={headerMenuButtonHandler} />
                   <Profile />
                 </>
               }
@@ -90,6 +100,7 @@ function App() {
             />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          {isMenuPopupVisible && <MenuPopup menuPopupCloseHandler={menuPopupCloseButtonHandler} />}
         </div>
       </WindowSizeContext.Provider>
     </CurrentUserContext.Provider>
