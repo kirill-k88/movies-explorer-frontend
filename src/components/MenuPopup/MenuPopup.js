@@ -8,7 +8,7 @@ function MenuPopup({ menuPopupCloseHandler }) {
   return (
     <div className="menu-popup">
       <button
-        className="menu-popup__close-button connon-button"
+        className="menu-popup__close-button common-button"
         onClick={menuPopupCloseHandler}
       ></button>
       <div className="menu-popup__container">
