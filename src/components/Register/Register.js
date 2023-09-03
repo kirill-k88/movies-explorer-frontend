@@ -13,7 +13,7 @@ function Register() {
     mode: 'onBlur'
   });
 
-  function onEdit(data) {
+  function onSubmit(data) {
     console.log(data, errors);
   }
 
@@ -21,17 +21,11 @@ function Register() {
     <section className="register">
       <div className="register__head">
         <Link to="/main">
-          <img
-            className="register__logo common-button"
-            src={logo}
-            alt="Лого"
-          />
+          <img className="register__logo common-button" src={logo} alt="Лого" />
         </Link>
         <h1 className="register__header">Добро пожаловать!</h1>
       </div>
-      <form
-        className="register__form"
-        onSubmit={handleSubmit(onEdit)}>
+      <form className="register__form" onSubmit={handleSubmit(onSubmit)}>
         <div className="register__input-container">
           <p className="register__text">Имя</p>
           <input
@@ -98,17 +92,12 @@ function Register() {
             <span className="register__error">{errors.passwordField.message}</span>
           )}
         </div>
-        <button
-          className="register__button-signup common-button"
-          type="submit"
-          disabled={!isValid}>
+        <button className="register__button-signup common-button" type="submit" disabled={!isValid}>
           Зарегистрироваться
         </button>
         <div className="register__enter-container">
           <p className="register__enter-text">Уже зарегистрированы?</p>
-          <Link
-            to="/signin"
-            className="register__enter common-link">
+          <Link to="/signin" className="register__enter common-link">
             Войти
           </Link>
         </div>
