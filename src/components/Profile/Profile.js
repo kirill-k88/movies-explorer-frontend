@@ -42,9 +42,7 @@ function Profile() {
   return (
     <section className="profile">
       <h1 className="profile__header">{`Привет, ${currentUser.name}!`}</h1>
-      <form
-        className="profile__form"
-        onSubmit={handleSubmit(onSubmit)}>
+      <form className="profile__form" onSubmit={handleSubmit(onSubmit)}>
         <div className="profile__input-container  register__input-container_bordered">
           <input
             className="profile__input"
@@ -97,7 +95,8 @@ function Profile() {
             <button
               className="profile__button-save common-button"
               type="submit"
-              disabled={!isValid}>
+              disabled={!isValid}
+            >
               Сохранить
             </button>
           </div>
@@ -107,13 +106,11 @@ function Profile() {
             <button
               className="profile__button-edit common-button"
               type="button"
-              onClick={onEditButtonClick}>
+              onClick={onEditButtonClick}
+            >
               Редактировать
             </button>
-            <button
-              className="profile__button-exit common-button"
-              type="button"
-              onClick={onExit}>
+            <button className="profile__button-exit common-button" type="button" onClick={onExit}>
               Выйти из аккаунта
             </button>
           </>
