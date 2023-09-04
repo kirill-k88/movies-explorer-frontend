@@ -20,8 +20,8 @@ function SearchForm() {
   }
 
   return (
-    <section className="search-form__container">
-      <form className="search-form">
+    <section className="search-form">
+      <form className="search-form__form">
         <div className="search-form__input-container">
           <input
             className="search-form__input"

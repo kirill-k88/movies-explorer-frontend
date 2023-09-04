@@ -28,7 +28,7 @@ function Header({ headerMenuButtonHandler }) {
             alt="Лого"
           />
         </Link>
-        {loggedIn && currentUser.name && size[0] > 768 && <Navigation />}
+        {loggedIn && currentUser.name && size[0] > 768 && <Navigation isPopup={false} />}
         <div className="header__button-container">
           {loggedIn && currentUser.name ? (
             size[0] > 768 ? (

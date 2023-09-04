@@ -33,7 +33,7 @@ function AboutProject() {
               4 недели
             </td>
           </tr>
-          <tr className="about-project__table-raw about-project__table-row_type_second">
+          <tr className="about-project__table-row about-project__table-row_type_second">
             <td className="about-project__table-cell">Back-end</td>
             <td className="about-project__table-cell">Front-end</td>
           </tr>
