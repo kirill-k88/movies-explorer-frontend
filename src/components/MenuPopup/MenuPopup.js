@@ -1,9 +1,10 @@
 import './MenuPopup.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 import ProfileButton from '../ProfileButton/ProfileButton';
 
 function MenuPopup({ menuPopupCloseHandler }) {
+  const location = useLocation();
   return (
     <div className="menu-popup">
       <button
@@ -13,7 +14,9 @@ function MenuPopup({ menuPopupCloseHandler }) {
         <div className="menu-popup__link-container">
           <Link
             to="/main"
-            className="menu-popup__link common-link"
+            className={`menu-popup__link common-link ${
+              location.pathname === '/main' && 'menu-popup__link_active-popup'
+            }`}
             onClick={menuPopupCloseHandler}>
             Главная
           </Link>

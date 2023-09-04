@@ -37,6 +37,10 @@
   text-decoration: none;
 }
 
+.menu-popup__link_active-popup {
+  border-bottom: 2px solid #000;
+}
+
 .menu-popup__container {
   height: calc(100% - 159px - 90px);
   margin-top: 159px;
