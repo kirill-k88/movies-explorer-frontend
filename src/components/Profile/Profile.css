@@ -47,7 +47,7 @@
 }
 
 .profile__input:focus {
-  outline: none;
+  outline: 1.5px solid #aaaaaa;
 }
 
 .profile__input:disabled {

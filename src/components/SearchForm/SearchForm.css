@@ -38,7 +38,7 @@
 }
 
 .search-form__input:focus {
-  outline: none;
+  outline: 1.5px solid #aaaaaa;
 }
 
 .search-form__button-submit {
