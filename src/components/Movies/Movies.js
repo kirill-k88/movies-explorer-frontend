@@ -3,8 +3,10 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import { apiMovies } from '../../utils/ApiMovie';
 import Preloader from '../Preloader/Preloader';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
-function Movies() {
+function Movies({ headerMenuButtonHandler }) {
   const [movies, setMovies] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,13 +28,17 @@ function Movies() {
     return <Preloader />;
   } else {
     return (
-      <main className="movies">
-        <SearchForm />
-        <MoviesCardList
-          movies={movies}
-          baseUrl={apiMovies.getBaseUrl()}
-        />
-      </main>
+      <>
+        <Header headerMenuButtonHandler={headerMenuButtonHandler} />
+        <main className="movies">
+          <SearchForm />
+          <MoviesCardList
+            movies={movies}
+            baseUrl={apiMovies.getBaseUrl()}
+          />
+        </main>
+        <Footer />
+      </>
     );
   }
 }

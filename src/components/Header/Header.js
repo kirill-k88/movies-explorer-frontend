@@ -11,7 +11,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 function Header({ headerMenuButtonHandler }) {
-  const currentUser = useContext(CurrentUserContext);
+  const { currentUser, loggedIn } = useContext(CurrentUserContext);
   const size = useContext(WindowSizeContext);
   const location = useLocation();
 
@@ -19,15 +19,18 @@ function Header({ headerMenuButtonHandler }) {
     <header
       className={`header ${
         location.pathname === '/main' ? 'header_type_blue' : 'header_type_white'
-      }`}
-    >
+      }`}>
       <div className="header__container">
         <Link to="/main">
-          <img className="header__logo common-button" src={logo} alt="Лого" />
+          <img
+            className="header__logo common-button"
+            src={logo}
+            alt="Лого"
+          />
         </Link>
-        {currentUser.name && size[0] > 768 && <Navigation />}
+        {loggedIn && currentUser.name && size[0] > 768 && <Navigation />}
         <div className="header__button-container">
-          {currentUser.name ? (
+          {loggedIn && currentUser.name ? (
             size[0] > 768 ? (
               <ProfileButton />
             ) : (

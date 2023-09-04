@@ -5,17 +5,23 @@ import AboutProject from './AboutProject/AboutProject';
 import Techs from './Techs/Techs';
 import AboutMe from './AboutMe/AboutMe';
 import Portfolio from './Portfolio/Portfolio';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
-function Main() {
+function Main({ headerMenuButtonHandler }) {
   return (
-    <main className="main">
-      <Promo />
-      <NavTab />
-      <AboutProject />
-      <Techs />
-      <AboutMe />
-      <Portfolio />
-    </main>
+    <>
+      <Header headerMenuButtonHandler={headerMenuButtonHandler} />
+      <main className="main">
+        <Promo />
+        <NavTab />
+        <AboutProject />
+        <Techs />
+        <AboutMe />
+        <Portfolio />
+      </main>
+      <Footer />
+    </>
   );
 }
 
