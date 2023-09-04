@@ -2,11 +2,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 71px 70px 70px;
+  height: 100vh;
+  padding: 0 70px;
   background-color: #fff;
 }
 
 .register__head {
+  margin-top: 71px;
   min-width: 396px;
   display: flex;
   flex-direction: column;
@@ -31,6 +33,15 @@
 
 .register__form {
   margin-top: 40px;
+  margin-bottom: 70px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.register__input-list {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -89,6 +100,10 @@
   color: #a0a0a0;
 }
 
+.register__button-list {
+  width: 100%;
+}
+
 .register__button-signup {
   margin-top: 48px;
   padding: 0;
@@ -142,24 +157,30 @@
 
 @media screen and (max-width: 768px) {
   .register {
-    padding: 233px 30px 232px;
+    padding: 0 30px;
+  }
+  .register__head {
+    margin-top: 233px;
   }
   .register__form {
     margin-top: 40px;
+    margin-bottom: 232px;
   }
 }
 
 @media screen and (max-width: 500px) {
   .register {
-    padding: 56px 14px 30px;
+    padding: 0 14px;
   }
   .register__head {
+    margin-top: 56px;
     min-width: 260px;
     gap: 47px;
     align-items: center;
   }
   .register__form {
     margin-top: 80px;
+    margin-bottom: 30px;
   }
   .register__input-container {
     min-width: 260px;

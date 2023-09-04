@@ -2,11 +2,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 71px 70px 70px;
+  height: 100vh;
+  padding: 0 70px;
   background-color: #fff;
 }
 
 .login__head {
+  margin-top: 71px;
   min-width: 396px;
   display: flex;
   flex-direction: column;
@@ -30,10 +32,13 @@
 }
 
 .login__form {
+  margin-bottom: 70px;
   margin-top: 40px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 }
 
 .login__input-container {
@@ -42,6 +47,12 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+.login__input-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .login__input {
@@ -87,6 +98,10 @@
   letter-spacing: 0em;
   text-align: left;
   color: #a0a0a0;
+}
+
+.login__button-list {
+  width: 100%;
 }
 
 .login__button-enter {
@@ -142,24 +157,31 @@
 
 @media screen and (max-width: 768px) {
   .login {
-    padding: 233px 30px 232px;
+    padding: 0 30px;
   }
+  .login__head {
+    margin-top: 233px;
+  }
+
   .login__form {
     margin-top: 40px;
+    margin-bottom: 232px;
   }
 }
 
 @media screen and (max-width: 500px) {
   .login {
-    padding: 56px 14px 30px;
+    padding: 14px;
   }
   .login__head {
+    margin-top: 51px;
     min-width: 260px;
     gap: 47px;
     align-items: center;
   }
   .login__form {
     margin-top: 80px;
+    margin-bottom: 38px;
   }
   .login__input-container {
     min-width: 260px;

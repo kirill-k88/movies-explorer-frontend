@@ -8,7 +8,7 @@ function Portfolio() {
       <ul className="portfolio__link-list">
         <li className="portfolio__item">
           <a
-            href="1"
+            href="https://github.com/kirill-k88/how-to-learn"
             className="portfolio__link common-link"
             target="_blank"
             rel="noopener noreferrer"
@@ -19,7 +19,7 @@ function Portfolio() {
         </li>
         <li className="portfolio__item">
           <a
-            href="2"
+            href="https://kirill-k88.github.io/russian-travel/"
             className="portfolio__link common-link"
             target="_blank"
             rel="noopener noreferrer"
@@ -30,7 +30,7 @@ function Portfolio() {
         </li>
         <li className="portfolio__item">
           <a
-            href="3"
+            href="https://kirill-k88.github.io/react-mesto-auth/"
             className="portfolio__link common-link"
             target="_blank"
             rel="noopener noreferrer"
