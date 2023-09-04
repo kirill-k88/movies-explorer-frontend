@@ -26,6 +26,10 @@
   line-height: 18px;
 }
 
+.navigation__link:visited {
+  color: #000;
+}
+
 .navigation__link_type_popup {
   font-size: 18px;
   font-weight: 500;
@@ -34,7 +38,15 @@
   text-align: center;
 }
 
+.navigation__link_type_popup:visited {
+  color: #000;
+}
+
 .navigation__link_type_white {
+  color: #fff;
+}
+
+.navigation__link_type_white:visited {
   color: #fff;
 }
 
