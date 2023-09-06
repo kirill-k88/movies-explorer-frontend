@@ -3,8 +3,9 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './Profile.css';
 import React, { useContext, useEffect, useState } from 'react';
 import Header from '../Header/Header';
+import { apiUsers } from '../../utils/ApiUsers';
 
-function Profile({ headerMenuButtonHandler }) {
+function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setLoggedIn }) {
   const [enableEdit, setEnableEdit] = useState(false);
   const [apiError, setApiError] = useState('');
   const { currentUser } = useContext(CurrentUserContext);
@@ -27,8 +28,16 @@ function Profile({ headerMenuButtonHandler }) {
     setEnableEdit(true);
   }
 
-  function onExit(evt) {
-    evt.preventDefault();
+  function onExit() {
+    apiUsers
+      .logout()
+      .then(res => {
+        if (res.answer === 'ok') {
+          setCurrentUser({});
+          setLoggedIn(false);
+        }
+      })
+      .catch(err => openErrorPopup(err));
   }
 
   function onSubmit(data) {
