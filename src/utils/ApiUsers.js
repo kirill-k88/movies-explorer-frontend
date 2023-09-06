@@ -59,7 +59,8 @@ class ApiUsers {
     return this._request('/users/me', {
       method: 'PATCH',
       headers: this._getHeaders(),
-      body: JSON.stringify(userObject)
+      body: JSON.stringify(userObject),
+      credentials: 'include'
     });
   }
 

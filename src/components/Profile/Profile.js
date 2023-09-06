@@ -12,6 +12,7 @@ function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setL
   const {
     register,
     handleSubmit,
+    reset,
     setValue,
     formState: { errors, isValid }
   } = useForm({
@@ -19,8 +20,8 @@ function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setL
   });
 
   useEffect(() => {
-    setValue('nameField', currentUser.name);
-    setValue('emailField', currentUser.email);
+    setValue('name', currentUser.name);
+    setValue('email', currentUser.email);
     // eslint-disable-next-line
   }, [currentUser]);
 
@@ -35,14 +36,24 @@ function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setL
         if (res.answer === 'ok') {
           setCurrentUser({});
           setLoggedIn(false);
+          reset();
         }
       })
       .catch(err => openErrorPopup(err));
   }
 
   function onSubmit(data) {
-    setApiError('При обновлении профиля произошла ошибка.');
-    //временно, до подключения API
+    apiUsers
+      .modifyUserInfo(data)
+      .then(res => {
+        setCurrentUser(res);
+      })
+      .catch(err => {
+        setApiError('При обновлении профиля произошла ошибка.');
+      })
+      .finally(() => {
+        reset();
+      });
     setTimeout(function () {
       setApiError('');
       setEnableEdit(false);
@@ -61,7 +72,7 @@ function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setL
               type="text"
               disabled={!enableEdit && true}
               placeholder="Имя"
-              {...register('nameField', {
+              {...register('name', {
                 required: 'Поле не может быть пустым.',
                 minLength: {
                   value: 2,
@@ -77,9 +88,7 @@ function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setL
                 }
               })}
             />
-            {errors?.nameField && (
-              <span className="profile__error">{errors.nameField.message}</span>
-            )}
+            {errors?.name && <span className="profile__error">{errors.name.message}</span>}
             <p className="profile__text">Имя</p>
           </div>
           <div className="profile__input-container">
@@ -90,7 +99,7 @@ function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setL
               name="email"
               disabled={!enableEdit && true}
               placeholder="E-mail"
-              {...register('emailField', {
+              {...register('email', {
                 required: 'Поле не может быть пустым.',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i,
@@ -98,9 +107,7 @@ function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setL
                 }
               })}
             />
-            {errors?.emailField && (
-              <span className="profile__error">{errors.emailField.message}</span>
-            )}
+            {errors?.email && <span className="profile__error">{errors.email.message}</span>}
             <p className="profile__text">E-mail</p>
           </div>
           {enableEdit && (
