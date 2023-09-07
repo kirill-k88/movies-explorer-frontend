@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { WindowSizeContext } from '../../contexts/WindowSizeContext.js';
 
-function MoviesCardList({ movies, baseUrl }) {
+function MoviesCardList({ filtredMovies, baseUrl }) {
   const [lastMovieId, setLastMovieId] = useState(0);
   const size = useContext(WindowSizeContext);
 
@@ -20,9 +20,11 @@ function MoviesCardList({ movies, baseUrl }) {
   }
 
   function addCardButtonShow() {
-    if (lastMovieId + cardsCount < Array.from(movies).length) {
+    if (lastMovieId + cardsCount < Array.from(filtredMovies).length) {
       return (
-        <button className="movie-card-list__add-button common-button" onClick={onAddButtonClick}>
+        <button
+          className="movie-card-list__add-button common-button"
+          onClick={onAddButtonClick}>
           Ещё
         </button>
       );
@@ -32,7 +34,7 @@ function MoviesCardList({ movies, baseUrl }) {
   return (
     <section className="movie-card-list">
       <div className="movie-card-list__container">
-        {Array.from(movies)
+        {Array.from(filtredMovies)
           .slice(0, lastMovieId + cardsCount)
           .map(movie => (
             <MoviesCard

@@ -41,8 +41,11 @@ function App() {
 
   useLayoutEffect(() => {
     function updateSize() {
-      setSize([window.innerWidth, window.innerHeight]);
+      setTimeout(function () {
+        setSize([window.innerWidth, window.innerHeight]);
+      }, 500);
     }
+
     window.addEventListener('resize', updateSize);
     updateSize();
     return () => window.removeEventListener('resize', updateSize);
@@ -62,7 +65,12 @@ function App() {
               path="/movies"
               element={
                 <ProtectedRoute
-                  element={<Movies headerMenuButtonHandler={headerMenuButtonHandler} />}
+                  element={
+                    <Movies
+                      headerMenuButtonHandler={headerMenuButtonHandler}
+                      openErrorPopup={openErrorPopup}
+                    />
+                  }
                 />
               }
             />
@@ -70,7 +78,12 @@ function App() {
               path="/saved-movies"
               element={
                 <ProtectedRoute
-                  element={<SavedMovies headerMenuButtonHandler={headerMenuButtonHandler} />}
+                  element={
+                    <SavedMovies
+                      headerMenuButtonHandler={headerMenuButtonHandler}
+                      openErrorPopup={openErrorPopup}
+                    />
+                  }
                 />
               }
             />

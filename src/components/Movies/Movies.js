@@ -6,8 +6,9 @@ import Preloader from '../Preloader/Preloader';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
-function Movies({ headerMenuButtonHandler }) {
+function Movies({ headerMenuButtonHandler, openErrorPopup }) {
   const [movies, setMovies] = useState({});
+  const [filtredMovies, setFilterdMovies] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -17,30 +18,33 @@ function Movies({ headerMenuButtonHandler }) {
       .then(allMovies => {
         setMovies(allMovies);
       })
-      .catch(err => {
-        console.log(err);
-      })
+      .catch(err => openErrorPopup(err))
       .finally(() => setIsLoading(false));
     // eslint-disable-next-line
   }, []);
 
-  if (isLoading) {
-    return <Preloader />;
-  } else {
-    return (
-      <>
-        <Header headerMenuButtonHandler={headerMenuButtonHandler} />
-        <main className="movies">
-          <SearchForm />
+  return (
+    <>
+      <Header headerMenuButtonHandler={headerMenuButtonHandler} />
+      <main className="movies">
+        <SearchForm
+          movies={movies}
+          filtredMovies={filtredMovies}
+          setFilterdMovies={setFilterdMovies}
+          setIsLoading={setIsLoading}
+        />
+        {isLoading ? (
+          <Preloader />
+        ) : (
           <MoviesCardList
-            movies={movies}
+            filtredMovies={filtredMovies}
             baseUrl={apiMovies.getBaseUrl()}
           />
-        </main>
-        <Footer />
-      </>
-    );
-  }
+        )}
+      </main>
+      <Footer />
+    </>
+  );
 }
 
 export default Movies;
