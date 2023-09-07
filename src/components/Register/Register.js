@@ -2,30 +2,46 @@ import { useForm } from 'react-hook-form';
 import './Register.css';
 import React from 'react';
 import logo from '../../images/header/logo.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { apiUsers } from '../../utils/ApiUsers';
 
-function Register() {
+function Register({ openErrorPopup }) {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isValid }
   } = useForm({
     mode: 'onBlur'
   });
 
   function onSubmit(data) {
-    console.log(data, errors);
+    const { password, email, name } = data;
+    apiUsers
+      .register(password, email, name)
+      .then(userObject => {
+        reset();
+        navigate('/signin');
+      })
+      .catch(err => openErrorPopup(err));
   }
 
   return (
     <section className="register">
       <div className="register__head">
         <Link to="/main">
-          <img className="register__logo common-button" src={logo} alt="Лого" />
+          <img
+            className="register__logo common-button"
+            src={logo}
+            alt="Лого"
+          />
         </Link>
         <h1 className="register__header">Добро пожаловать!</h1>
       </div>
-      <form className="register__form" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="register__form"
+        onSubmit={handleSubmit(onSubmit)}>
         <div className="register__input-list">
           <div className="register__input-container">
             <p className="register__text">Имя</p>
@@ -33,7 +49,7 @@ function Register() {
               className="register__input"
               type="text"
               placeholder="Имя"
-              {...register('nameField', {
+              {...register('name', {
                 required: 'Поле не может быть пустым.',
                 minLength: {
                   value: 2,
@@ -49,9 +65,7 @@ function Register() {
                 }
               })}
             />
-            {errors?.nameField && (
-              <span className="register__error">{errors.nameField.message}</span>
-            )}
+            {errors?.name && <span className="register__error">{errors.name.message}</span>}
           </div>
           <div className="register__input-container">
             <p className="register__text">E-mail</p>
@@ -59,7 +73,7 @@ function Register() {
               className="register__input"
               type="text"
               placeholder="E-mail"
-              {...register('emailField', {
+              {...register('email', {
                 required: 'Поле не может быть пустым.',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i,
@@ -67,9 +81,7 @@ function Register() {
                 }
               })}
             />
-            {errors?.emailField && (
-              <span className="register__error">{errors.emailField.message}</span>
-            )}
+            {errors?.email && <span className="register__error">{errors.email.message}</span>}
           </div>
           <div className="register__input-container">
             <p className="register__text">Пароль</p>
@@ -78,7 +90,7 @@ function Register() {
               type="password"
               title="Пароль должен содержать лат. буквы в разных регистрах, не менее одной цифры и одного спецсивола: !@#$&*"
               placeholder="password"
-              {...register('passwordField', {
+              {...register('password', {
                 required: 'Поле не может быть пустым.',
                 minLength: {
                   value: 8,
@@ -92,22 +104,21 @@ function Register() {
               })}
             />
 
-            {errors?.passwordField && (
-              <span className="register__error">{errors.passwordField.message}</span>
-            )}
+            {errors?.password && <span className="register__error">{errors.password.message}</span>}
           </div>
         </div>
         <div className="register__button-list">
           <button
             className="register__button-signup common-button"
             type="submit"
-            disabled={!isValid}
-          >
+            disabled={!isValid}>
             Зарегистрироваться
           </button>
           <div className="register__enter-container">
             <p className="register__enter-text">Уже зарегистрированы?</p>
-            <Link to="/signin" className="register__enter common-link">
+            <Link
+              to="/signin"
+              className="register__enter common-link">
               Войти
             </Link>
           </div>

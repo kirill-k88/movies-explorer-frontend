@@ -89,7 +89,10 @@ function App() {
                 />
               }
             />
-            <Route path="/signup" element={<Register />} />
+            <Route
+              path="/signup"
+              element={<Register openErrorPopup={openErrorPopup} />}
+            />
             <Route
               path="/signin"
               element={
@@ -100,7 +103,10 @@ function App() {
                 />
               }
             />
-            <Route path="*" element={<NotFound />} />
+            <Route
+              path="*"
+              element={<NotFound />}
+            />
           </Routes>
           {isMenuPopupVisible && <MenuPopup menuPopupCloseHandler={menuPopupCloseButtonHandler} />}
           {isErrorPopupVisible && (

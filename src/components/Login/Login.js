@@ -11,6 +11,7 @@ function Login({ openErrorPopup, setCurrentUser, setLoggedIn }) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isValid }
   } = useForm({
     mode: 'onBlur'
@@ -21,9 +22,10 @@ function Login({ openErrorPopup, setCurrentUser, setLoggedIn }) {
     apiUsers
       .authorize(password, email)
       .then(userObject => {
-        navigate('/main');
         setCurrentUser(userObject);
         setLoggedIn(true);
+        reset();
+        navigate('/main');
       })
       .catch(err => openErrorPopup(err));
   }
@@ -32,11 +34,17 @@ function Login({ openErrorPopup, setCurrentUser, setLoggedIn }) {
     <section className="login">
       <div className="login__head">
         <Link to="/main">
-          <img className="login__logo common-button" src={logo} alt="Лого" />
+          <img
+            className="login__logo common-button"
+            src={logo}
+            alt="Лого"
+          />
         </Link>
         <h1 className="login__header">Рады видеть!</h1>
       </div>
-      <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="login__form"
+        onSubmit={handleSubmit(onSubmit)}>
         <div className="login__input-list">
           <div className="login__input-container">
             <p className="login__text">E-mail</p>
@@ -78,12 +86,17 @@ function Login({ openErrorPopup, setCurrentUser, setLoggedIn }) {
           </div>
         </div>
         <div className="login__button-list">
-          <button className="login__button-enter common-button" type="submit" disabled={!isValid}>
+          <button
+            className="login__button-enter common-button"
+            type="submit"
+            disabled={!isValid}>
             Войти
           </button>
           <div className="login__register-container">
             <p className="login__register-text">Ещё не зарегистрированы?</p>
-            <Link to="/signup" className="login__register common-link">
+            <Link
+              to="/signup"
+              className="login__register common-link">
               Регистрация
             </Link>
           </div>

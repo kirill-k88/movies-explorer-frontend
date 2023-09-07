@@ -8,9 +8,15 @@ class ApiUsers {
       let message;
       console.log(res.status);
       if (res.status === 401) {
-        message = 'Ошибка: Вы ввели неправильный логин или пароль';
+        message = 'Вы ввели неправильный логин или пароль.';
       }
-      return Promise.reject(message || `При авторизации произошла ошибка: ${res.status}`);
+      if (res.status === 400) {
+        message = 'При регистрации пользователя произошла ошибка.';
+      }
+      if (res.status === 409) {
+        message = 'Пользователь с таким email уже существует.';
+      }
+      return Promise.reject(message || `Произошла ошибка: ${res.status}.`);
     }
     return res.json();
   }
@@ -43,11 +49,11 @@ class ApiUsers {
     });
   }
 
-  register(password, email) {
+  register(password, email, name) {
     return this._request('/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password, email })
+      body: JSON.stringify({ password, email, name })
     });
   }
 
