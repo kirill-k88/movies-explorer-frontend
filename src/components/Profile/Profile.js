@@ -36,6 +36,7 @@ function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setL
         if (res.answer === 'ok') {
           setCurrentUser({});
           setLoggedIn(false);
+          localStorage.setItem('searchMovies', JSON.stringify({}));
           reset();
         }
       })
@@ -63,9 +64,7 @@ function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setL
       <Header headerMenuButtonHandler={headerMenuButtonHandler} />
       <section className="profile">
         <h1 className="profile__header">{`Привет, ${currentUser.name}!`}</h1>
-        <form
-          className="profile__form"
-          onSubmit={handleSubmit(onSubmit)}>
+        <form className="profile__form" onSubmit={handleSubmit(onSubmit)}>
           <div className="profile__input-container  profile__input-container_bordered">
             <input
               className="profile__input"
@@ -116,7 +115,8 @@ function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setL
               <button
                 className="profile__button-save common-button"
                 type="submit"
-                disabled={!isValid}>
+                disabled={!isValid}
+              >
                 Сохранить
               </button>
             </div>
@@ -126,13 +126,11 @@ function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setL
               <button
                 className="profile__button-edit common-button"
                 type="button"
-                onClick={onEditButtonClick}>
+                onClick={onEditButtonClick}
+              >
                 Редактировать
               </button>
-              <button
-                className="profile__button-exit common-button"
-                type="button"
-                onClick={onExit}>
+              <button className="profile__button-exit common-button" type="button" onClick={onExit}>
                 Выйти из аккаунта
               </button>
             </>

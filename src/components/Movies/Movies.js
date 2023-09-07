@@ -32,14 +32,12 @@ function Movies({ headerMenuButtonHandler, openErrorPopup }) {
           filtredMovies={filtredMovies}
           setFilterdMovies={setFilterdMovies}
           setIsLoading={setIsLoading}
+          openErrorPopup={openErrorPopup}
         />
         {isLoading ? (
           <Preloader />
         ) : (
-          <MoviesCardList
-            filtredMovies={filtredMovies}
-            baseUrl={apiMovies.getBaseUrl()}
-          />
+          <MoviesCardList filtredMovies={filtredMovies} baseUrl={apiMovies.getBaseUrl()} />
         )}
       </main>
       <Footer />

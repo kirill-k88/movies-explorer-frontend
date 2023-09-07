@@ -7,34 +7,40 @@ import { savedMoviesList } from '../../utils/savedMoviesArray';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 
-function Movies({ headerMenuButtonHandler }) {
+function Movies({ headerMenuButtonHandler, openErrorPopup }) {
   const [movies, setMovies] = useState({});
+  const [filtredMovies, setFilterdMovies] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
     //временная заглушка
     setMovies(savedMoviesList);
+    setFilterdMovies(savedMoviesList);
     setIsLoading(false);
   }, []);
 
-  if (isLoading) {
-    return <Preloader />;
-  } else {
-    return (
-      <>
-        <Header headerMenuButtonHandler={headerMenuButtonHandler} />
-        <main className="movies">
-          <SearchForm />
-          <MoviesCardList
-            movies={movies}
-            baseUrl={apiMovies.getBaseUrl()}
-          />
-        </main>
-        <Footer />
-      </>
-    );
-  }
+  return (
+    <>
+      <Header headerMenuButtonHandler={headerMenuButtonHandler} />
+      <main className="movies">
+        <SearchForm
+          movies={movies}
+          filtredMovies={filtredMovies}
+          setFilterdMovies={setFilterdMovies}
+          setIsLoading={setIsLoading}
+          openErrorPopup={openErrorPopup}
+        />
+
+        {isLoading ? (
+          <Preloader />
+        ) : (
+          <MoviesCardList filtredMovies={filtredMovies} baseUrl={apiMovies.getBaseUrl()} />
+        )}
+      </main>
+      <Footer />
+    </>
+  );
 }
 
 export default Movies;

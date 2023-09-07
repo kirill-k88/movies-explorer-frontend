@@ -22,9 +22,7 @@ function MoviesCardList({ filtredMovies, baseUrl }) {
   function addCardButtonShow() {
     if (lastMovieId + cardsCount < Array.from(filtredMovies).length) {
       return (
-        <button
-          className="movie-card-list__add-button common-button"
-          onClick={onAddButtonClick}>
+        <button className="movie-card-list__add-button common-button" onClick={onAddButtonClick}>
           Ещё
         </button>
       );

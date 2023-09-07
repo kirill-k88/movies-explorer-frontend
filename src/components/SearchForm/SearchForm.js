@@ -2,38 +2,33 @@ import './SearchForm.css';
 import React, { useEffect, useState } from 'react';
 import findImage from '../../images/search/find.svg';
 import { useForm } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
 
-function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading }) {
+function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading, openErrorPopup }) {
   const [isShortMovie, setIsShortMovie] = useState(false);
-  const [searchString, setSearchString] = useState('');
+  const location = useLocation();
+
   const {
     register,
     handleSubmit,
     setValue,
-    getValues,
     formState: { errors, isValid }
   } = useForm({
     mode: 'onBlur'
   });
 
-  /*   useEffect(() => {
-    const savedState = localStorage.getItem('searchMovies');
-    if (savedState) {
-      const savedStateObject = JSON.parse(savedState);
-      setIsShortMovie(savedStateObject.isShortMovie);
-      setValue('search', savedStateObject.searchString);
-      setFilterdMovies(savedStateObject.filtredMovies);
+  useEffect(() => {
+    if (location.pathname === '/movies') {
+      const savedState = localStorage.getItem('searchMovies');
+      if (savedState) {
+        const { search, isShortMovie, filterdResult } = JSON.parse(savedState);
+        setValue('search', search || '');
+        setIsShortMovie(isShortMovie || false);
+        setFilterdMovies(filterdResult || {});
+      }
     }
     // eslint-disable-next-line
-  }, []);*/
-
-  useEffect(() => {
-    localStorage.setItem(
-      'searchMovies',
-      JSON.stringify({ filtredMovies, searchString, isShortMovie })
-    );
-    // eslint-disable-next-line
-  }, [filtredMovies]);
+  }, []);
 
   function onCheckBoxClick() {
     setIsShortMovie(!isShortMovie);
@@ -59,31 +54,33 @@ function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading }) {
     return result;
   }
 
-  function onSubmit() {
+  function onSubmit(data) {
     setIsLoading(true);
 
-    const search = getValues('search');
-    setSearchString(search);
+    let filterdResult;
 
-    console.log(movies, search);
-    console.log(searchMovies(search, movies));
     if (isShortMovie) {
-      setFilterdMovies(filterShortMovies(searchMovies(search, movies)));
+      filterdResult = filterShortMovies(searchMovies(data.search, movies));
     } else {
-      setFilterdMovies(searchMovies(search, movies));
+      filterdResult = searchMovies(data.search, movies);
     }
 
+    setFilterdMovies(filterdResult);
+    if (location.pathname === '/movies') {
+      localStorage.setItem(
+        'searchMovies',
+        JSON.stringify({ filterdResult, search: data.search, isShortMovie })
+      );
+    }
     setTimeout(function () {
       setIsLoading(false);
-    }, 500);
+      filterdResult.length === 0 && openErrorPopup('Ничего не найдено.');
+    }, 1000);
   }
 
   return (
     <section className="search-form">
-      <form
-        className="search-form__form"
-        /* onSubmit={handleSubmit(onSubmit)} */
-      >
+      <form className="search-form__form" onSubmit={handleSubmit(onSubmit)}>
         <div className="search-form__container">
           <div className="search-form__input-container">
             <input
@@ -96,11 +93,7 @@ function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading }) {
             />
             {errors?.search && <span className="search-form__error">{errors.search.message}</span>}
           </div>
-          <button
-            className="search-form__button-submit"
-            type="button"
-            onClick={onSubmit}
-            disabled={!isValid}>
+          <button className="search-form__button-submit" type="submit" disabled={!isValid}>
             <img
               className="search-form__button-submit-image common-button"
               src={findImage}
@@ -115,7 +108,8 @@ function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading }) {
             className={`search-form__checkbox ${
               isShortMovie && 'search-form__checkbox_checked'
             } common-button`}
-            onClick={onCheckBoxClick}></button>
+            onClick={onCheckBoxClick}
+          ></button>
           <p className="search-form__checkbox-label">Короткометражки</p>
         </div>
       </form>
