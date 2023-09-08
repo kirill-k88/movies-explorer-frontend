@@ -27,24 +27,11 @@ class ApiUsersMovies {
     };
   }
 
-  sendNewMovie(movie, image, thumbnail) {
-    const movieObject = {
-      movieId: movie.id,
-      thumbnail: thumbnail,
-      image: image,
-      nameRU: movie.nameRU,
-      nameEN: movie.nameEN,
-      country: movie.country,
-      year: movie.year,
-      duration: movie.duration,
-      director: movie.director,
-      description: movie.description,
-      trailerLink: movie.trailerLink
-    };
+  sendNewMovie(movie) {
     return this._request('/movies', {
       method: 'POST',
       headers: this._getHeaders(),
-      body: JSON.stringify(movieObject),
+      body: JSON.stringify(movie),
       credentials: 'include'
     });
   }
@@ -52,6 +39,14 @@ class ApiUsersMovies {
   deleteMovie(movieId) {
     return this._request(`/movies/${movieId}`, {
       method: 'DELETE',
+      headers: this._getHeaders(),
+      credentials: 'include'
+    });
+  }
+
+  getAllMovies() {
+    return this._request('/movies', {
+      method: 'GET',
       headers: this._getHeaders(),
       credentials: 'include'
     });

@@ -30,6 +30,13 @@ function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading, ope
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    if (location.pathname === '/saved-movies') {
+      setFilterdMovies(movies || {});
+    }
+    // eslint-disable-next-line
+  }, [movies]);
+
   function onCheckBoxClick() {
     setIsShortMovie(!isShortMovie);
   }
@@ -80,7 +87,9 @@ function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading, ope
 
   return (
     <section className="search-form">
-      <form className="search-form__form" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="search-form__form"
+        onSubmit={handleSubmit(onSubmit)}>
         <div className="search-form__container">
           <div className="search-form__input-container">
             <input
@@ -93,7 +102,10 @@ function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading, ope
             />
             {errors?.search && <span className="search-form__error">{errors.search.message}</span>}
           </div>
-          <button className="search-form__button-submit" type="submit" disabled={!isValid}>
+          <button
+            className="search-form__button-submit"
+            type="submit"
+            disabled={!isValid}>
             <img
               className="search-form__button-submit-image common-button"
               src={findImage}
@@ -108,8 +120,7 @@ function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading, ope
             className={`search-form__checkbox ${
               isShortMovie && 'search-form__checkbox_checked'
             } common-button`}
-            onClick={onCheckBoxClick}
-          ></button>
+            onClick={onCheckBoxClick}></button>
           <p className="search-form__checkbox-label">Короткометражки</p>
         </div>
       </form>

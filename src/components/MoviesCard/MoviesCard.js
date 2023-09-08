@@ -3,29 +3,37 @@ import './MoviesCard.css';
 import React, { useRef, useState } from 'react';
 import { apiUsersMovies } from '../../utils/ApiUsersMovies';
 
-function MoviesCard({ movie, baseUrl, openErrorPopup }) {
+function MoviesCard({ movie, openErrorPopup, deleteMovie }) {
   const [isliked, setIsLiked] = useState(false);
   const thisMovie = useRef({});
   const location = useLocation();
 
-  const image = `${baseUrl}${movie.image.url}`;
-  const thumbnail = `${baseUrl}${movie.image.formats.thumbnail.url}`;
   const duration = getFormatedDuration(movie.duration);
+
+  function onRemoveClick() {
+    apiUsersMovies
+      .deleteMovie(movie._id)
+      .then(ret => {
+        if (ret.acknowledged) {
+          deleteMovie(movie._id);
+        }
+      })
+      .catch(err => openErrorPopup(err));
+  }
 
   function onLikeClick() {
     if (!isliked) {
       apiUsersMovies
-        .sendNewMovie(movie, image, thumbnail)
-        .then(movie => {
-          thisMovie.id = movie._id;
-          thisMovie.owner = movie.owner;
-          console.log(thisMovie);
+        .sendNewMovie(movie)
+        .then(retMovie => {
+          thisMovie._id = retMovie._id;
+          thisMovie.owner = retMovie.owner;
           setIsLiked(true);
         })
         .catch(err => openErrorPopup(err));
     } else {
       apiUsersMovies
-        .deleteMovie(thisMovie.id)
+        .deleteMovie(thisMovie._id)
         .then(movie => {
           setIsLiked(false);
         })
@@ -42,7 +50,7 @@ function MoviesCard({ movie, baseUrl, openErrorPopup }) {
   return (
     <div className="movie-card">
       <img
-        src={image}
+        src={movie.image}
         alt="Постер к фильму"
         className="movie-card__image"
       />
@@ -56,7 +64,7 @@ function MoviesCard({ movie, baseUrl, openErrorPopup }) {
               ? 'movie-card__button-like_type_dislike'
               : 'movie-card__button-like_type_like'
           } common-button`}
-          onClick={onLikeClick}></button>
+          onClick={location.pathname === '/saved-movies' ? onRemoveClick : onLikeClick}></button>
       </div>
       <p className="movie-card__duration">{duration}</p>
     </div>

@@ -11,17 +11,42 @@ function Movies({ headerMenuButtonHandler, openErrorPopup }) {
   const [filtredMovies, setFilterdMovies] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
+  function deleteMovie(movie_id) {
+    movies.splice(
+      movies.findIndex(item => item._id === movie_id),
+      1
+    );
+  }
+
   useEffect(() => {
     setIsLoading(true);
     apiMovies
       .getMovies()
       .then(allMovies => {
-        setMovies(allMovies);
+        setMovies(modifyMovies(allMovies));
       })
       .catch(err => openErrorPopup(err))
       .finally(() => setIsLoading(false));
     // eslint-disable-next-line
   }, []);
+
+  function modifyMovies(moviesInitList) {
+    return moviesInitList.map(movie => {
+      return {
+        movieId: movie.id,
+        thumbnail: `${apiMovies.getBaseUrl()}${movie.image.formats.thumbnail.url}`,
+        image: `${apiMovies.getBaseUrl()}${movie.image.url}`,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN,
+        country: movie.country,
+        year: movie.year,
+        duration: movie.duration,
+        director: movie.director,
+        description: movie.description,
+        trailerLink: movie.trailerLink
+      };
+    });
+  }
 
   return (
     <>
@@ -42,6 +67,7 @@ function Movies({ headerMenuButtonHandler, openErrorPopup }) {
             baseUrl={apiMovies.getBaseUrl()}
             openErrorPopup={openErrorPopup}
             setIsLoading={setIsLoading}
+            deleteMovie={deleteMovie}
           />
         )}
       </main>
