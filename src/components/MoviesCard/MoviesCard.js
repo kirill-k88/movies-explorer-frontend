@@ -1,21 +1,33 @@
 import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { apiUsersMovies } from '../../utils/ApiUsersMovies';
 
-function MoviesCard({ movie, openErrorPopup, deleteMovie }) {
+function MoviesCard({ movie, openErrorPopup, savedMovies, updateSavedMovies }) {
   const [isliked, setIsLiked] = useState(false);
   const thisMovie = useRef({});
   const location = useLocation();
 
   const duration = getFormatedDuration(movie.duration);
 
+  useEffect(() => {
+    if (location.pathname === '/movies') {
+      console.log(savedMovies, movie);
+      setIsLiked(
+        savedMovies.findIndex(savedMovie => savedMovie.movieId === movie.movieId) >= 0
+          ? true
+          : false
+      );
+    }
+    // eslint-disable-next-line
+  }, [savedMovies]);
+
   function onRemoveClick() {
     apiUsersMovies
       .deleteMovie(movie._id)
       .then(ret => {
         if (ret.acknowledged) {
-          deleteMovie(movie._id);
+          updateSavedMovies();
         }
       })
       .catch(err => openErrorPopup(err));
@@ -49,11 +61,7 @@ function MoviesCard({ movie, openErrorPopup, deleteMovie }) {
 
   return (
     <div className="movie-card">
-      <img
-        src={movie.image}
-        alt="Постер к фильму"
-        className="movie-card__image"
-      />
+      <img src={movie.image} alt="Постер к фильму" className="movie-card__image" />
       <div className="movie-card__content-container">
         <p className="movie-card__description">{movie.nameRU}</p>
         <button
@@ -64,7 +72,8 @@ function MoviesCard({ movie, openErrorPopup, deleteMovie }) {
               ? 'movie-card__button-like_type_dislike'
               : 'movie-card__button-like_type_like'
           } common-button`}
-          onClick={location.pathname === '/saved-movies' ? onRemoveClick : onLikeClick}></button>
+          onClick={location.pathname === '/saved-movies' ? onRemoveClick : onLikeClick}
+        ></button>
       </div>
       <p className="movie-card__duration">{duration}</p>
     </div>

@@ -3,7 +3,14 @@ import React, { useContext, useState } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { WindowSizeContext } from '../../contexts/WindowSizeContext.js';
 
-function MoviesCardList({ filtredMovies, baseUrl, openErrorPopup, setIsLoading, deleteMovie }) {
+function MoviesCardList({
+  filtredMovies,
+  baseUrl,
+  openErrorPopup,
+  setIsLoading,
+  savedMovies,
+  updateSavedMovies
+}) {
   const [lastMovieId, setLastMovieId] = useState(0);
   const size = useContext(WindowSizeContext);
 
@@ -17,9 +24,7 @@ function MoviesCardList({ filtredMovies, baseUrl, openErrorPopup, setIsLoading, 
   function addCardButtonShow() {
     if (lastMovieId + addCardsCount < Array.from(filtredMovies).length) {
       return (
-        <button
-          className="movie-card-list__add-button common-button"
-          onClick={onAddButtonClick}>
+        <button className="movie-card-list__add-button common-button" onClick={onAddButtonClick}>
           Ещё
         </button>
       );
@@ -37,7 +42,8 @@ function MoviesCardList({ filtredMovies, baseUrl, openErrorPopup, setIsLoading, 
               movie={movie}
               openErrorPopup={openErrorPopup}
               setIsLoading={setIsLoading}
-              deleteMovie={deleteMovie}
+              savedMovies={savedMovies}
+              updateSavedMovies={updateSavedMovies}
               key={movie.id || movie.movieId}
             />
           ))}

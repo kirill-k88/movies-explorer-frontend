@@ -7,38 +7,30 @@ import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import { apiUsersMovies } from '../../utils/ApiUsersMovies';
 
-function Movies({ headerMenuButtonHandler, openErrorPopup }) {
-  const [movies, setMovies] = useState({});
+function Movies({ headerMenuButtonHandler, openErrorPopup, savedMovies, setSavedMovies }) {
   const [filtredMovies, setFilterdMovies] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  function deleteMovie(movie_id) {
-    let newMovieList = [...movies];
-    const index = movies.findIndex(item => item._id === movie_id);
-    if (index >= 0) {
-      newMovieList.splice(index, 1);
-      setMovies(newMovieList);
-    }
-  }
-
   useEffect(() => {
-    setIsLoading(true);
+    updateSavedMovies();
+    // eslint-disable-next-line
+  }, []);
+
+  function updateSavedMovies() {
     apiUsersMovies
       .getAllMovies()
       .then(allMovies => {
-        setMovies(allMovies);
+        setSavedMovies(allMovies);
       })
-      .catch(err => openErrorPopup(err))
-      .finally(() => setIsLoading(false));
-    // eslint-disable-next-line
-  }, []);
+      .catch(err => openErrorPopup(err));
+  }
 
   return (
     <>
       <Header headerMenuButtonHandler={headerMenuButtonHandler} />
       <main className="movies">
         <SearchForm
-          movies={movies}
+          movies={savedMovies}
           filtredMovies={filtredMovies}
           setFilterdMovies={setFilterdMovies}
           setIsLoading={setIsLoading}
@@ -53,7 +45,8 @@ function Movies({ headerMenuButtonHandler, openErrorPopup }) {
             baseUrl={apiMovies.getBaseUrl()}
             openErrorPopup={openErrorPopup}
             setIsLoading={setIsLoading}
-            deleteMovie={deleteMovie}
+            updateSavedMovies={updateSavedMovies}
+            savedMovies={savedMovies}
           />
         )}
       </main>

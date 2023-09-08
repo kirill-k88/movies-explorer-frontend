@@ -6,19 +6,10 @@ import Preloader from '../Preloader/Preloader';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
-function Movies({ headerMenuButtonHandler, openErrorPopup }) {
+function Movies({ headerMenuButtonHandler, openErrorPopup, savedMovies }) {
   const [movies, setMovies] = useState({});
   const [filtredMovies, setFilterdMovies] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-
-  function deleteMovie(movie_id) {
-    let newMovieList = [...movies];
-    const index = movies.findIndex(item => item._id === movie_id);
-    if (index >= 0) {
-      newMovieList.splice(index, 1);
-      setMovies(newMovieList);
-    }
-  }
 
   useEffect(() => {
     setIsLoading(true);
@@ -69,7 +60,7 @@ function Movies({ headerMenuButtonHandler, openErrorPopup }) {
             baseUrl={apiMovies.getBaseUrl()}
             openErrorPopup={openErrorPopup}
             setIsLoading={setIsLoading}
-            deleteMovie={deleteMovie}
+            savedMovies={savedMovies}
           />
         )}
       </main>

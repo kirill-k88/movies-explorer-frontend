@@ -14,6 +14,7 @@ import MenuPopup from '../MenuPopup/MenuPopup';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import ErrorPopup from '../ErrorPopup/ErrorPopup';
 import { apiUsers } from '../../utils/ApiUsers';
+import { apiUsersMovies } from '../../utils/ApiUsersMovies';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -22,6 +23,7 @@ function App() {
   const [isMenuPopupVisible, setIsMenuPopupVisible] = useState(false);
   const [isErrorPopupVisible, setIsErrorPopupVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [savedMovies, setSavedMovies] = useState([]);
 
   function menuPopupCloseButtonHandler() {
     setIsMenuPopupVisible(false);
@@ -46,12 +48,23 @@ function App() {
         setSize([window.innerWidth, window.innerHeight]);
       }, 500);
     }
-
     window.addEventListener('resize', updateSize);
     updateSize();
     return () => window.removeEventListener('resize', updateSize);
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (loggedIn) {
+      apiUsersMovies
+        .getAllMovies()
+        .then(allMovies => {
+          setSavedMovies(allMovies);
+        })
+        .catch(err => openErrorPopup(err));
+    }
+    // eslint-disable-next-line
+  }, [loggedIn]);
 
   useEffect(() => {
     apiUsers
@@ -80,6 +93,7 @@ function App() {
                     <Movies
                       headerMenuButtonHandler={headerMenuButtonHandler}
                       openErrorPopup={openErrorPopup}
+                      savedMovies={savedMovies}
                     />
                   }
                 />
@@ -93,6 +107,8 @@ function App() {
                     <SavedMovies
                       headerMenuButtonHandler={headerMenuButtonHandler}
                       openErrorPopup={openErrorPopup}
+                      savedMovies={savedMovies}
+                      setSavedMovies={setSavedMovies}
                     />
                   }
                 />
@@ -133,10 +149,7 @@ function App() {
                 />
               }
             />
-            <Route
-              path="*"
-              element={<NotFound />}
-            />
+            <Route path="*" element={<NotFound />} />
           </Routes>
           {isMenuPopupVisible && <MenuPopup menuPopupCloseHandler={menuPopupCloseButtonHandler} />}
           {isErrorPopupVisible && (
