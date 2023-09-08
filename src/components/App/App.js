@@ -115,7 +115,13 @@ function App() {
             />
             <Route
               path="/signup"
-              element={<Register openErrorPopup={openErrorPopup} />}
+              element={
+                <Register
+                  openErrorPopup={openErrorPopup}
+                  setCurrentUser={setCurrentUser}
+                  setLoggedIn={setLoggedIn}
+                />
+              }
             />
             <Route
               path="/signin"

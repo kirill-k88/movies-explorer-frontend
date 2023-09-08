@@ -25,7 +25,7 @@ function Login({ openErrorPopup, setCurrentUser, setLoggedIn }) {
         setCurrentUser(userObject);
         setLoggedIn(true);
         reset();
-        navigate('/main');
+        navigate('/movies');
       })
       .catch(err => openErrorPopup(err));
   }

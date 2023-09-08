@@ -5,7 +5,7 @@ import logo from '../../images/header/logo.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import { apiUsers } from '../../utils/ApiUsers';
 
-function Register({ openErrorPopup }) {
+function Register({ openErrorPopup, setCurrentUser, setLoggedIn }) {
   const navigate = useNavigate();
   const {
     register,
@@ -23,6 +23,13 @@ function Register({ openErrorPopup }) {
       .then(userObject => {
         reset();
         navigate('/signin');
+        return apiUsers.authorize(password, email);
+      })
+      .then(userObject => {
+        setCurrentUser(userObject);
+        setLoggedIn(true);
+        reset();
+        navigate('/movies');
       })
       .catch(err => openErrorPopup(err));
   }
