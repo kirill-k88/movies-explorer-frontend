@@ -12,10 +12,12 @@ function Movies({ headerMenuButtonHandler, openErrorPopup }) {
   const [isLoading, setIsLoading] = useState(false);
 
   function deleteMovie(movie_id) {
-    movies.splice(
-      movies.findIndex(item => item._id === movie_id),
-      1
-    );
+    let newMovieList = [...movies];
+    const index = movies.findIndex(item => item._id === movie_id);
+    if (index >= 0) {
+      newMovieList.splice(index, 1);
+      setMovies(newMovieList);
+    }
   }
 
   useEffect(() => {
