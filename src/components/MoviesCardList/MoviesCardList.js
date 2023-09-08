@@ -7,22 +7,19 @@ function MoviesCardList({ filtredMovies, baseUrl }) {
   const [lastMovieId, setLastMovieId] = useState(0);
   const size = useContext(WindowSizeContext);
 
-  const cardsCount = size[0] > 768 ? 16 : size[0] > 500 ? 8 : 5;
+  const initCardsCount = size[0] > 768 ? 16 : size[0] > 500 ? 8 : 5;
+  const addCardsCount = size[0] > 768 ? 4 : size[0] > 500 ? 2 : 2;
 
   function onAddButtonClick() {
-    setLastMovieId(lastMovieId + cardsCount);
-  }
-
-  function getFormatedDuration(timeInMinutes) {
-    const hours = Math.floor(timeInMinutes / 60);
-    const minutes = timeInMinutes % 60;
-    return `${hours > 0 ? hours + 'ч' : ''}${minutes > 0 ? minutes + 'м' : ''}`;
+    setLastMovieId(lastMovieId + addCardsCount);
   }
 
   function addCardButtonShow() {
-    if (lastMovieId + cardsCount < Array.from(filtredMovies).length) {
+    if (lastMovieId + addCardsCount < Array.from(filtredMovies).length) {
       return (
-        <button className="movie-card-list__add-button common-button" onClick={onAddButtonClick}>
+        <button
+          className="movie-card-list__add-button common-button"
+          onClick={onAddButtonClick}>
           Ещё
         </button>
       );
@@ -33,12 +30,11 @@ function MoviesCardList({ filtredMovies, baseUrl }) {
     <section className="movie-card-list">
       <div className="movie-card-list__container">
         {Array.from(filtredMovies)
-          .slice(0, lastMovieId + cardsCount)
+          .slice(0, lastMovieId + initCardsCount)
           .map(movie => (
             <MoviesCard
-              nameRU={movie.nameRU}
-              image={`${baseUrl}${movie.image.url}`}
-              duration={getFormatedDuration(movie.duration)}
+              baseUrl={baseUrl}
+              movie={movie}
               key={movie.id}
             />
           ))}

@@ -58,7 +58,7 @@ class ApiUsers {
   }
 
   getUserInfo() {
-    return this._request('/users/me', { headers: this._getHeaders() });
+    return this._request('/users/me', { headers: this._getHeaders(), credentials: 'include' });
   }
 
   modifyUserInfo(userObject) {

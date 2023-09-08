@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import { WindowSizeContext } from '../../contexts/WindowSizeContext.js';
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
@@ -13,6 +13,7 @@ import NotFound from '../NotFound/NotFound';
 import MenuPopup from '../MenuPopup/MenuPopup';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import ErrorPopup from '../ErrorPopup/ErrorPopup';
+import { apiUsers } from '../../utils/ApiUsers';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -50,6 +51,16 @@ function App() {
     updateSize();
     return () => window.removeEventListener('resize', updateSize);
     // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    apiUsers
+      .getUserInfo()
+      .then(user => {
+        setCurrentUser(user);
+        setLoggedIn(true);
+      })
+      .catch(err => console.log(err));
   }, []);
 
   return (

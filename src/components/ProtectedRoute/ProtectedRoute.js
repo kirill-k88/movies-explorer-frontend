@@ -8,7 +8,7 @@ function ProtectedRoute({ element }) {
     element
   ) : (
     <Navigate
-      to="/signin"
+      to="/main"
       replace
     />
   );
