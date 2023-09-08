@@ -1,16 +1,36 @@
 import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { apiUsersMovies } from '../../utils/ApiUsersMovies';
 
-function MoviesCard({ movie, baseUrl }) {
+function MoviesCard({ movie, baseUrl, openErrorPopup }) {
   const [isliked, setIsLiked] = useState(false);
+  const thisMovie = useRef({});
   const location = useLocation();
 
   const image = `${baseUrl}${movie.image.url}`;
+  const thumbnail = `${baseUrl}${movie.image.formats.thumbnail.url}`;
   const duration = getFormatedDuration(movie.duration);
 
   function onLikeClick() {
-    setIsLiked(!isliked);
+    if (!isliked) {
+      apiUsersMovies
+        .sendNewMovie(movie, image, thumbnail)
+        .then(movie => {
+          thisMovie.id = movie._id;
+          thisMovie.owner = movie.owner;
+          console.log(thisMovie);
+          setIsLiked(true);
+        })
+        .catch(err => openErrorPopup(err));
+    } else {
+      apiUsersMovies
+        .deleteMovie(thisMovie.id)
+        .then(movie => {
+          setIsLiked(false);
+        })
+        .catch(err => openErrorPopup(err));
+    }
   }
 
   function getFormatedDuration(timeInMinutes) {

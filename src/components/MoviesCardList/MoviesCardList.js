@@ -3,7 +3,7 @@ import React, { useContext, useState } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { WindowSizeContext } from '../../contexts/WindowSizeContext.js';
 
-function MoviesCardList({ filtredMovies, baseUrl }) {
+function MoviesCardList({ filtredMovies, baseUrl, openErrorPopup, setIsLoading }) {
   const [lastMovieId, setLastMovieId] = useState(0);
   const size = useContext(WindowSizeContext);
 
@@ -35,6 +35,8 @@ function MoviesCardList({ filtredMovies, baseUrl }) {
             <MoviesCard
               baseUrl={baseUrl}
               movie={movie}
+              openErrorPopup={openErrorPopup}
+              setIsLoading={setIsLoading}
               key={movie.id}
             />
           ))}

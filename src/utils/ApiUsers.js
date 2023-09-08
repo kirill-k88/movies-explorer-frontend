@@ -27,7 +27,6 @@ class ApiUsers {
 
   _getHeaders() {
     return {
-      /*       Authorization: `Bearer ${localStorage.getItem('token')}`, */
       'Content-Type': 'application/json'
     };
   }
@@ -69,23 +68,7 @@ class ApiUsers {
       credentials: 'include'
     });
   }
-
-  /*   sendNewCard(cardObject) {
-    return this._request('/cards', {
-      method: 'POST',
-      headers: this._getHeaders(),
-      body: JSON.stringify(cardObject)
-    });
-  }*/
-
-  deleteCard(cardId) {
-    return this._request(`/cards/${cardId}`, {
-      method: 'DELETE',
-      headers: this._getHeaders()
-    });
-  }
 }
-
 export const apiUsers = new ApiUsers(
   /*  'https://api.movie-searcher.nomoredomainsicu.ru' */
   'http://localhost:4000'

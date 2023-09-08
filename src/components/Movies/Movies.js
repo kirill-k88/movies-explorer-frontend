@@ -37,7 +37,12 @@ function Movies({ headerMenuButtonHandler, openErrorPopup }) {
         {isLoading ? (
           <Preloader />
         ) : (
-          <MoviesCardList filtredMovies={filtredMovies} baseUrl={apiMovies.getBaseUrl()} />
+          <MoviesCardList
+            filtredMovies={filtredMovies}
+            baseUrl={apiMovies.getBaseUrl()}
+            openErrorPopup={openErrorPopup}
+            setIsLoading={setIsLoading}
+          />
         )}
       </main>
       <Footer />
