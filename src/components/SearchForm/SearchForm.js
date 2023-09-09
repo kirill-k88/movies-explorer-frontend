@@ -12,6 +12,7 @@ function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading, ope
     register,
     handleSubmit,
     setValue,
+    getValues,
     formState: { errors, isValid }
   } = useForm({
     mode: 'all'
@@ -39,6 +40,9 @@ function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading, ope
 
   function setCheckBox() {
     setIsShortMovie(!isShortMovie);
+    if (getValues('search').length === 0) {
+      setValue('search', ' ');
+    }
   }
 
   function filterShortMovies(movies) {
