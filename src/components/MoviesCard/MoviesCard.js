@@ -1,18 +1,16 @@
 import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { apiUsersMovies } from '../../utils/ApiUsersMovies';
 
 function MoviesCard({ movie, openErrorPopup, savedMovies, updateSavedMovies }) {
   const [isliked, setIsLiked] = useState(false);
-  const thisMovie = useRef({});
   const location = useLocation();
 
   const duration = getFormatedDuration(movie.duration);
 
   useEffect(() => {
     if (location.pathname === '/movies') {
-      console.log(savedMovies, movie);
       setIsLiked(
         savedMovies.findIndex(savedMovie => savedMovie.movieId === movie.movieId) >= 0
           ? true
@@ -24,7 +22,7 @@ function MoviesCard({ movie, openErrorPopup, savedMovies, updateSavedMovies }) {
 
   function onRemoveClick() {
     apiUsersMovies
-      .deleteMovie(movie._id)
+      .deleteMovie(movie.movieId)
       .then(ret => {
         if (ret.acknowledged) {
           updateSavedMovies();
@@ -38,14 +36,12 @@ function MoviesCard({ movie, openErrorPopup, savedMovies, updateSavedMovies }) {
       apiUsersMovies
         .sendNewMovie(movie)
         .then(retMovie => {
-          thisMovie._id = retMovie._id;
-          thisMovie.owner = retMovie.owner;
           setIsLiked(true);
         })
         .catch(err => openErrorPopup(err));
     } else {
       apiUsersMovies
-        .deleteMovie(thisMovie._id)
+        .deleteMovie(movie.movieId)
         .then(movie => {
           setIsLiked(false);
         })

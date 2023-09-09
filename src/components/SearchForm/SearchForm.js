@@ -37,14 +37,14 @@ function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading, ope
     // eslint-disable-next-line
   }, [movies]);
 
-  function onCheckBoxClick() {
+  function setCheckBox() {
     setIsShortMovie(!isShortMovie);
   }
 
   function filterShortMovies(movies) {
     const result = [];
     for (let i = 0; i < movies.length; i++) {
-      if (movies[i].duration <= 60) {
+      if (movies[i].duration <= 40) {
         result.push(movies[i]);
       }
     }
@@ -54,7 +54,7 @@ function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading, ope
   function searchMovies(keyword, movies) {
     const result = [];
     for (let i = 0; i < movies.length; i++) {
-      if (movies[i].nameRU.includes(keyword)) {
+      if (movies[i].nameRU.includes(keyword) || movies[i].nameEN.includes(keyword)) {
         result.push(movies[i]);
       }
     }
@@ -87,9 +87,7 @@ function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading, ope
 
   return (
     <section className="search-form">
-      <form
-        className="search-form__form"
-        onSubmit={handleSubmit(onSubmit)}>
+      <form className="search-form__form" onSubmit={handleSubmit(onSubmit)}>
         <div className="search-form__container">
           <div className="search-form__input-container">
             <input
@@ -102,10 +100,7 @@ function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading, ope
             />
             {errors?.search && <span className="search-form__error">{errors.search.message}</span>}
           </div>
-          <button
-            className="search-form__button-submit"
-            type="submit"
-            disabled={!isValid}>
+          <button className="search-form__button-submit" type="submit" disabled={!isValid}>
             <img
               className="search-form__button-submit-image common-button"
               src={findImage}
@@ -116,11 +111,12 @@ function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading, ope
 
         <div className="search-form__checkbox-container">
           <button
-            type="button"
+            type="submit"
             className={`search-form__checkbox ${
               isShortMovie && 'search-form__checkbox_checked'
             } common-button`}
-            onClick={onCheckBoxClick}></button>
+            onClick={setCheckBox}
+          ></button>
           <p className="search-form__checkbox-label">Короткометражки</p>
         </div>
       </form>

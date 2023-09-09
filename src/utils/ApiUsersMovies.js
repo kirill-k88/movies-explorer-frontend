@@ -9,6 +9,9 @@ class ApiUsersMovies {
       if (res.status === 400) {
         message = 'На сервере произошла ошибка валидации при добавлении фильма.';
       }
+      if (res.status === 401) {
+        message = 'Время действия куки истекло. Необходима перерегистрация.';
+      }
       if (res.status === 409) {
         message = 'Фильм уже есть в списке пользователя';
       }
@@ -54,6 +57,6 @@ class ApiUsersMovies {
 }
 
 export const apiUsersMovies = new ApiUsersMovies(
-  /*  'https://api.movie-searcher.nomoredomainsicu.ru' */
-  'http://localhost:4000'
+  'https://api.movie-searcher.nomoredomainsicu.ru'
+  /*  'http://localhost:4000' */
 );
