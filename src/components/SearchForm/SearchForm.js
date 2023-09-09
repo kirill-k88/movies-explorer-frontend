@@ -14,7 +14,7 @@ function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading, ope
     setValue,
     formState: { errors, isValid }
   } = useForm({
-    mode: 'onBlur'
+    mode: 'all'
   });
 
   useEffect(() => {
@@ -54,7 +54,10 @@ function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading, ope
   function searchMovies(keyword, movies) {
     const result = [];
     for (let i = 0; i < movies.length; i++) {
-      if (movies[i].nameRU.includes(keyword) || movies[i].nameEN.includes(keyword)) {
+      if (
+        movies[i].nameRU.toLowerCase().includes(keyword.toLowerCase()) ||
+        movies[i].nameEN.toLowerCase().includes(keyword.toLowerCase())
+      ) {
         result.push(movies[i]);
       }
     }

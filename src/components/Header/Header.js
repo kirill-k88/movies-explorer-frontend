@@ -17,16 +17,11 @@ function Header({ headerMenuButtonHandler }) {
 
   return (
     <header
-      className={`header ${
-        location.pathname === '/main' ? 'header_type_blue' : 'header_type_white'
-      }`}>
+      className={`header ${location.pathname === '/' ? 'header_type_blue' : 'header_type_white'}`}
+    >
       <div className="header__container">
-        <Link to="/main">
-          <img
-            className="header__logo common-button"
-            src={logo}
-            alt="Лого"
-          />
+        <Link to="/">
+          <img className="header__logo common-button" src={logo} alt="Лого" />
         </Link>
         {loggedIn && currentUser.name && size[0] > 768 && <Navigation isPopup={false} />}
         <div className="header__button-container">

@@ -24,6 +24,7 @@ function App() {
   const [isErrorPopupVisible, setIsErrorPopupVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [savedMovies, setSavedMovies] = useState([]);
+  const [isBlackMessage, setIsBlackMessage] = useState(false);
 
   function menuPopupCloseButtonHandler() {
     setIsMenuPopupVisible(false);
@@ -37,7 +38,8 @@ function App() {
     setIsErrorPopupVisible(false);
   }
 
-  function openErrorPopup(message) {
+  function openErrorPopup(message, isBlackMessage = false) {
+    setIsBlackMessage(isBlackMessage);
     setErrorMessage(message);
     setIsErrorPopupVisible(true);
   }
@@ -81,10 +83,7 @@ function App() {
       <WindowSizeContext.Provider value={size}>
         <div className="app">
           <Routes>
-            <Route
-              path="/main"
-              element={<Main headerMenuButtonHandler={headerMenuButtonHandler} />}
-            />
+            <Route path="/" element={<Main headerMenuButtonHandler={headerMenuButtonHandler} />} />
             <Route
               path="/movies"
               element={
@@ -129,26 +128,30 @@ function App() {
                 />
               }
             />
-            <Route
-              path="/signup"
-              element={
-                <Register
-                  openErrorPopup={openErrorPopup}
-                  setCurrentUser={setCurrentUser}
-                  setLoggedIn={setLoggedIn}
-                />
-              }
-            />
-            <Route
-              path="/signin"
-              element={
-                <Login
-                  openErrorPopup={openErrorPopup}
-                  setCurrentUser={setCurrentUser}
-                  setLoggedIn={setLoggedIn}
-                />
-              }
-            />
+            {!loggedIn && (
+              <Route
+                path="/signup"
+                element={
+                  <Register
+                    openErrorPopup={openErrorPopup}
+                    setCurrentUser={setCurrentUser}
+                    setLoggedIn={setLoggedIn}
+                  />
+                }
+              />
+            )}
+            {!loggedIn && (
+              <Route
+                path="/signin"
+                element={
+                  <Login
+                    openErrorPopup={openErrorPopup}
+                    setCurrentUser={setCurrentUser}
+                    setLoggedIn={setLoggedIn}
+                  />
+                }
+              />
+            )}
             <Route path="*" element={<NotFound />} />
           </Routes>
           {isMenuPopupVisible && <MenuPopup menuPopupCloseHandler={menuPopupCloseButtonHandler} />}
@@ -156,6 +159,7 @@ function App() {
             <ErrorPopup
               errorPopupCloseHandler={errorPopupCloseButtonHandler}
               errorMessage={errorMessage}
+              isBlack={isBlackMessage}
             />
           )}
         </div>

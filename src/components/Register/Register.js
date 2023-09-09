@@ -13,7 +13,7 @@ function Register({ openErrorPopup, setCurrentUser, setLoggedIn }) {
     reset,
     formState: { errors, isValid }
   } = useForm({
-    mode: 'onBlur'
+    mode: 'all'
   });
 
   function onSubmit(data) {
@@ -37,18 +37,12 @@ function Register({ openErrorPopup, setCurrentUser, setLoggedIn }) {
   return (
     <section className="register">
       <div className="register__head">
-        <Link to="/main">
-          <img
-            className="register__logo common-button"
-            src={logo}
-            alt="Лого"
-          />
+        <Link to="/">
+          <img className="register__logo common-button" src={logo} alt="Лого" />
         </Link>
         <h1 className="register__header">Добро пожаловать!</h1>
       </div>
-      <form
-        className="register__form"
-        onSubmit={handleSubmit(onSubmit)}>
+      <form className="register__form" onSubmit={handleSubmit(onSubmit)}>
         <div className="register__input-list">
           <div className="register__input-container">
             <p className="register__text">Имя</p>
@@ -118,14 +112,13 @@ function Register({ openErrorPopup, setCurrentUser, setLoggedIn }) {
           <button
             className="register__button-signup common-button"
             type="submit"
-            disabled={!isValid}>
+            disabled={!isValid}
+          >
             Зарегистрироваться
           </button>
           <div className="register__enter-container">
             <p className="register__enter-text">Уже зарегистрированы?</p>
-            <Link
-              to="/signin"
-              className="register__enter common-link">
+            <Link to="/signin" className="register__enter common-link">
               Войти
             </Link>
           </div>

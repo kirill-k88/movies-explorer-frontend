@@ -39,3 +39,7 @@
   color: red;
   border: 1px solid #e8e8e8;
 }
+
+.error-popup__message_isblack {
+  color: #000;
+}

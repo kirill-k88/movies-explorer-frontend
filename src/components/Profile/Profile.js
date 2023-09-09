@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './Profile.css';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Header from '../Header/Header';
 import { apiUsers } from '../../utils/ApiUsers';
 
@@ -13,17 +13,14 @@ function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setL
     register,
     handleSubmit,
     reset,
-    setValue,
-    formState: { errors, isValid }
+    formState: { isDirty, errors, isValid }
   } = useForm({
-    mode: 'onBlur'
+    mode: 'all',
+    defaultValues: {
+      name: currentUser.name,
+      email: currentUser.email
+    }
   });
-
-  useEffect(() => {
-    setValue('name', currentUser.name);
-    setValue('email', currentUser.email);
-    // eslint-disable-next-line
-  }, [currentUser]);
 
   function onEditButtonClick(data) {
     setEnableEdit(true);
@@ -49,6 +46,7 @@ function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setL
       .then(res => {
         setCurrentUser(res);
         reset();
+        openErrorPopup('Данные успешно обновлены.', true);
       })
       .catch(err => {
         setApiError('При обновлении профиля произошла ошибка.');
@@ -115,7 +113,7 @@ function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setL
               <button
                 className="profile__button-save common-button"
                 type="submit"
-                disabled={!isValid}
+                disabled={!isValid || !isDirty}
               >
                 Сохранить
               </button>

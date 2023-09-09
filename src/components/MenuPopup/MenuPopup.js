@@ -9,21 +9,20 @@ function MenuPopup({ menuPopupCloseHandler }) {
     <div className="menu-popup">
       <button
         className="menu-popup__close-button common-button"
-        onClick={menuPopupCloseHandler}></button>
+        onClick={menuPopupCloseHandler}
+      ></button>
       <div className="menu-popup__container">
         <div className="menu-popup__link-container">
           <Link
-            to="/main"
+            to="/"
             className={`menu-popup__link common-link ${
-              location.pathname === '/main' && 'menu-popup__link_active-popup'
+              location.pathname === '/' && 'menu-popup__link_active-popup'
             }`}
-            onClick={menuPopupCloseHandler}>
+            onClick={menuPopupCloseHandler}
+          >
             Главная
           </Link>
-          <Navigation
-            isPopup={true}
-            clickHandler={menuPopupCloseHandler}
-          />
+          <Navigation isPopup={true} clickHandler={menuPopupCloseHandler} />
         </div>
         <ProfileButton clickHandler={menuPopupCloseHandler} />
       </div>
