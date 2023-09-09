@@ -20,6 +20,10 @@ function MoviesCard({ movie, openErrorPopup, savedMovies, updateSavedMovies }) {
     // eslint-disable-next-line
   }, [savedMovies]);
 
+  function onCardClick() {
+    window.open(movie.trailerLink, '_blank', 'noopener,noreferrer');
+  }
+
   function onRemoveClick() {
     apiUsersMovies
       .deleteMovie(movie.movieId)
@@ -57,9 +61,16 @@ function MoviesCard({ movie, openErrorPopup, savedMovies, updateSavedMovies }) {
 
   return (
     <div className="movie-card">
-      <img src={movie.image} alt="Постер к фильму" className="movie-card__image" />
+      <img
+        src={movie.image}
+        alt="Постер к фильму"
+        className="movie-card__image common-link"
+        onClick={onCardClick}
+      />
       <div className="movie-card__content-container">
-        <p className="movie-card__description">{movie.nameRU}</p>
+        <p className="movie-card__description common-link" onClick={onCardClick}>
+          {movie.nameRU}
+        </p>
         <button
           className={`movie-card__button-like ${
             location.pathname === '/saved-movies'
@@ -71,7 +82,9 @@ function MoviesCard({ movie, openErrorPopup, savedMovies, updateSavedMovies }) {
           onClick={location.pathname === '/saved-movies' ? onRemoveClick : onLikeClick}
         ></button>
       </div>
-      <p className="movie-card__duration">{duration}</p>
+      <p className="movie-card__duration common-link" onClick={onCardClick}>
+        {duration}
+      </p>
     </div>
   );
 }

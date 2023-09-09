@@ -57,6 +57,6 @@ class ApiUsersMovies {
 }
 
 export const apiUsersMovies = new ApiUsersMovies(
-  'https://api.movie-searcher.nomoredomainsicu.ru'
-  /*  'http://localhost:4000' */
+  /*  'https://api.movie-searcher.nomoredomainsicu.ru' */
+  'http://localhost:4000'
 );
