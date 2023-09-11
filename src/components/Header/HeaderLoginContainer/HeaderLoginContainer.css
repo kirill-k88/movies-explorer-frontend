@@ -28,13 +28,23 @@
 .header__button_type_signup-black {
   color: #000;
 }
+.header__button_type_signup-black:visited {
+  color: #000;
+}
 
 .header__button_type_signup-wite {
+  color: #fff;
+}
+.header__button_type_signup-wite:visited {
   color: #fff;
 }
 
 .header__button:hover {
   opacity: 0.8;
+}
+
+.header__button_type_signin:visited {
+  color: #000;
 }
 
 @media screen and (max-width: 500px) {
