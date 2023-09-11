@@ -14,7 +14,7 @@ https://www.figma.com/file/6FMWkB94wE7KTkcCgUXtnC/light-1?type=design&node-id=1-
 
 ## Ссылки на сайт
 
-https://movie-searcher.nomoredomainsicu.ru/main
+https://movie-searcher.nomoredomainsicu.ru
 
 ## Ссылки на сервер
 
