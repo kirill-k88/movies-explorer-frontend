@@ -2,15 +2,12 @@ import { useForm } from 'react-hook-form';
 import './Register.css';
 import React from 'react';
 import logo from '../../images/header/logo.svg';
-import { Link, useNavigate } from 'react-router-dom';
-import { apiUsers } from '../../utils/ApiUsers';
+import { Link } from 'react-router-dom';
 
-function Register({ openErrorPopup, setCurrentUser, setLoggedIn }) {
-  const navigate = useNavigate();
+function Register({ signUp }) {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isValid }
   } = useForm({
     mode: 'all'
@@ -18,31 +15,24 @@ function Register({ openErrorPopup, setCurrentUser, setLoggedIn }) {
 
   function onSubmit(data) {
     const { password, email, name } = data;
-    apiUsers
-      .register(password, email, name)
-      .then(userObject => {
-        reset();
-        navigate('/signin');
-        return apiUsers.authorize(password, email);
-      })
-      .then(userObject => {
-        setCurrentUser(userObject);
-        setLoggedIn(true);
-        reset();
-        navigate('/movies');
-      })
-      .catch(err => openErrorPopup(err));
+    signUp(password, email, name);
   }
 
   return (
     <section className="register">
       <div className="register__head">
         <Link to="/">
-          <img className="register__logo common-button" src={logo} alt="Лого" />
+          <img
+            className="register__logo common-button"
+            src={logo}
+            alt="Лого"
+          />
         </Link>
         <h1 className="register__header">Добро пожаловать!</h1>
       </div>
-      <form className="register__form" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="register__form"
+        onSubmit={handleSubmit(onSubmit)}>
         <div className="register__input-list">
           <div className="register__input-container">
             <p className="register__text">Имя</p>
@@ -112,13 +102,14 @@ function Register({ openErrorPopup, setCurrentUser, setLoggedIn }) {
           <button
             className="register__button-signup common-button"
             type="submit"
-            disabled={!isValid}
-          >
+            disabled={!isValid}>
             Зарегистрироваться
           </button>
           <div className="register__enter-container">
             <p className="register__enter-text">Уже зарегистрированы?</p>
-            <Link to="/signin" className="register__enter common-link">
+            <Link
+              to="/signin"
+              className="register__enter common-link">
               Войти
             </Link>
           </div>

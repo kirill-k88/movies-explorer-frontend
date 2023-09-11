@@ -1,9 +1,9 @@
 import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 import React, { useEffect, useState } from 'react';
-import { apiUsersMovies } from '../../utils/ApiUsersMovies';
+import { apiUsersMovies } from '../../utils/MainApiMovies';
 
-function MoviesCard({ movie, openErrorPopup, savedMovies, updateSavedMovies }) {
+function MoviesCard({ movie, openErrorPopup, savedMovies, getSavedMovies }) {
   const [isliked, setIsLiked] = useState(false);
   const location = useLocation();
 
@@ -29,7 +29,7 @@ function MoviesCard({ movie, openErrorPopup, savedMovies, updateSavedMovies }) {
       .deleteMovie(movie.movieId)
       .then(ret => {
         if (ret.acknowledged) {
-          updateSavedMovies();
+          getSavedMovies();
         }
       })
       .catch(err => openErrorPopup(err));
@@ -41,6 +41,7 @@ function MoviesCard({ movie, openErrorPopup, savedMovies, updateSavedMovies }) {
         .sendNewMovie(movie)
         .then(retMovie => {
           setIsLiked(true);
+          getSavedMovies();
         })
         .catch(err => openErrorPopup(err));
     } else {
@@ -48,6 +49,7 @@ function MoviesCard({ movie, openErrorPopup, savedMovies, updateSavedMovies }) {
         .deleteMovie(movie.movieId)
         .then(movie => {
           setIsLiked(false);
+          getSavedMovies();
         })
         .catch(err => openErrorPopup(err));
     }
@@ -68,7 +70,9 @@ function MoviesCard({ movie, openErrorPopup, savedMovies, updateSavedMovies }) {
         onClick={onCardClick}
       />
       <div className="movie-card__content-container">
-        <p className="movie-card__description common-link" onClick={onCardClick}>
+        <p
+          className="movie-card__description common-link"
+          onClick={onCardClick}>
           {movie.nameRU}
         </p>
         <button
@@ -79,10 +83,11 @@ function MoviesCard({ movie, openErrorPopup, savedMovies, updateSavedMovies }) {
               ? 'movie-card__button-like_type_dislike'
               : 'movie-card__button-like_type_like'
           } common-button`}
-          onClick={location.pathname === '/saved-movies' ? onRemoveClick : onLikeClick}
-        ></button>
+          onClick={location.pathname === '/saved-movies' ? onRemoveClick : onLikeClick}></button>
       </div>
-      <p className="movie-card__duration common-link" onClick={onCardClick}>
+      <p
+        className="movie-card__duration common-link"
+        onClick={onCardClick}>
         {duration}
       </p>
     </div>

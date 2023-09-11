@@ -10,7 +10,7 @@ function MoviesCardList({
   openErrorPopup,
   setIsLoading,
   savedMovies,
-  updateSavedMovies
+  getSavedMovies
 }) {
   const [lastMovieId, setLastMovieId] = useState(0);
   const size = useContext(WindowSizeContext);
@@ -19,6 +19,9 @@ function MoviesCardList({
   function onAddButtonClick() {
     const addCardsCount = size[0] > 768 ? 4 : size[0] > 500 ? 2 : 2;
     setLastMovieId(lastMovieId + addCardsCount);
+    setTimeout(function () {
+      scrollToBottom();
+    }, 50);
   }
 
   useEffect(() => {
@@ -26,11 +29,17 @@ function MoviesCardList({
     // eslint-disable-next-line
   }, []);
 
+  function scrollToBottom() {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+  }
+
   function addCardButtonShow() {
     if (location.pathname === '/movies') {
       if (lastMovieId <= Array.from(filtredMovies).length - 1) {
         return (
-          <button className="movie-card-list__add-button common-button" onClick={onAddButtonClick}>
+          <button
+            className="movie-card-list__add-button common-button"
+            onClick={onAddButtonClick}>
             Ещё
           </button>
         );
@@ -50,7 +59,7 @@ function MoviesCardList({
               openErrorPopup={openErrorPopup}
               setIsLoading={setIsLoading}
               savedMovies={savedMovies}
-              updateSavedMovies={updateSavedMovies}
+              getSavedMovies={getSavedMovies}
               key={movie.id || movie.movieId}
             />
           ))}

@@ -1,5 +1,5 @@
 import { checkResponse } from './checkResponse';
-class ApiMovies {
+class MoviesApi {
   constructor(baseUrl) {
     this._baseUrl = baseUrl;
   }
@@ -22,4 +22,4 @@ class ApiMovies {
   }
 }
 
-export const apiMovies = new ApiMovies('https://api.nomoreparties.co/');
+export const apiMovies = new MoviesApi('https://api.nomoreparties.co/');

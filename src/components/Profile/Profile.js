@@ -3,7 +3,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './Profile.css';
 import React, { useContext, useState } from 'react';
 import Header from '../Header/Header';
-import { apiUsers } from '../../utils/ApiUsers';
+import { apiUsers } from '../../utils/MainApi';
 
 function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setLoggedIn }) {
   const [enableEdit, setEnableEdit] = useState(false);
@@ -45,7 +45,6 @@ function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setL
       .modifyUserInfo(data)
       .then(res => {
         setCurrentUser(res);
-        reset();
         openErrorPopup('Данные успешно обновлены.', true);
       })
       .catch(err => {
@@ -62,7 +61,9 @@ function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setL
       <Header headerMenuButtonHandler={headerMenuButtonHandler} />
       <section className="profile">
         <h1 className="profile__header">{`Привет, ${currentUser.name}!`}</h1>
-        <form className="profile__form" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className="profile__form"
+          onSubmit={handleSubmit(onSubmit)}>
           <div className="profile__input-container  profile__input-container_bordered">
             <input
               className="profile__input"
@@ -113,8 +114,7 @@ function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setL
               <button
                 className="profile__button-save common-button"
                 type="submit"
-                disabled={!isValid || !isDirty}
-              >
+                disabled={!isValid || !isDirty}>
                 Сохранить
               </button>
             </div>
@@ -124,11 +124,13 @@ function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setL
               <button
                 className="profile__button-edit common-button"
                 type="button"
-                onClick={onEditButtonClick}
-              >
+                onClick={onEditButtonClick}>
                 Редактировать
               </button>
-              <button className="profile__button-exit common-button" type="button" onClick={onExit}>
+              <button
+                className="profile__button-exit common-button"
+                type="button"
+                onClick={onExit}>
                 Выйти из аккаунта
               </button>
             </>

@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import { WindowSizeContext } from '../../contexts/WindowSizeContext.js';
@@ -13,8 +13,9 @@ import NotFound from '../NotFound/NotFound';
 import MenuPopup from '../MenuPopup/MenuPopup';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import ErrorPopup from '../ErrorPopup/ErrorPopup';
-import { apiUsers } from '../../utils/ApiUsers';
-import { apiUsersMovies } from '../../utils/ApiUsersMovies';
+import { apiUsers } from '../../utils/MainApi';
+import { apiUsersMovies } from '../../utils/MainApiMovies';
+import { apiMovies } from '../../utils/MoviesApi';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -25,6 +26,9 @@ function App() {
   const [errorMessage, setErrorMessage] = useState('');
   const [savedMovies, setSavedMovies] = useState([]);
   const [isBlackMessage, setIsBlackMessage] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [movies, setMovies] = useState({});
+  const navigate = useNavigate();
 
   function menuPopupCloseButtonHandler() {
     setIsMenuPopupVisible(false);
@@ -44,6 +48,26 @@ function App() {
     setIsErrorPopupVisible(true);
   }
 
+  function logIn(password, email) {
+    apiUsers
+      .authorize(password, email)
+      .then(userObject => {
+        setCurrentUser(userObject);
+        setLoggedIn(true);
+        navigate('/movies');
+      })
+      .catch(err => openErrorPopup(err));
+  }
+
+  function signUp(password, email, name) {
+    apiUsers
+      .register(password, email, name)
+      .then(userObject => {
+        logIn(password, email);
+      })
+      .catch(err => openErrorPopup(err));
+  }
+
   useLayoutEffect(() => {
     function updateSize() {
       setTimeout(function () {
@@ -57,6 +81,41 @@ function App() {
   }, []);
 
   useEffect(() => {
+    setIsLoading(true);
+    apiMovies
+      .getMovies()
+      .then(allMovies => {
+        setMovies(modifyMovies(allMovies));
+      })
+      .catch(err => openErrorPopup(err))
+      .finally(() => setIsLoading(false));
+    // eslint-disable-next-line
+  }, []);
+
+  function modifyMovies(moviesInitList) {
+    return moviesInitList.map(movie => {
+      return {
+        movieId: movie.id,
+        thumbnail: `${apiMovies.getBaseUrl()}${movie.image.formats.thumbnail.url}`,
+        image: `${apiMovies.getBaseUrl()}${movie.image.url}`,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN,
+        country: movie.country,
+        year: movie.year,
+        duration: movie.duration,
+        director: movie.director,
+        description: movie.description,
+        trailerLink: movie.trailerLink
+      };
+    });
+  }
+
+  useEffect(() => {
+    getSavedMovies();
+    // eslint-disable-next-line
+  }, [loggedIn]);
+
+  function getSavedMovies() {
     if (loggedIn) {
       apiUsersMovies
         .getAllMovies()
@@ -65,8 +124,7 @@ function App() {
         })
         .catch(err => openErrorPopup(err));
     }
-    // eslint-disable-next-line
-  }, [loggedIn]);
+  }
 
   useEffect(() => {
     apiUsers
@@ -83,7 +141,10 @@ function App() {
       <WindowSizeContext.Provider value={size}>
         <div className="app">
           <Routes>
-            <Route path="/" element={<Main headerMenuButtonHandler={headerMenuButtonHandler} />} />
+            <Route
+              path="/"
+              element={<Main headerMenuButtonHandler={headerMenuButtonHandler} />}
+            />
             <Route
               path="/movies"
               element={
@@ -93,6 +154,10 @@ function App() {
                       headerMenuButtonHandler={headerMenuButtonHandler}
                       openErrorPopup={openErrorPopup}
                       savedMovies={savedMovies}
+                      getSavedMovies={getSavedMovies}
+                      isLoading={isLoading}
+                      movies={movies}
+                      setIsLoading={setIsLoading}
                     />
                   }
                 />
@@ -108,6 +173,7 @@ function App() {
                       openErrorPopup={openErrorPopup}
                       savedMovies={savedMovies}
                       setSavedMovies={setSavedMovies}
+                      getSavedMovies={getSavedMovies}
                     />
                   }
                 />
@@ -131,28 +197,19 @@ function App() {
             {!loggedIn && (
               <Route
                 path="/signup"
-                element={
-                  <Register
-                    openErrorPopup={openErrorPopup}
-                    setCurrentUser={setCurrentUser}
-                    setLoggedIn={setLoggedIn}
-                  />
-                }
+                element={<Register signUp={signUp} />}
               />
             )}
             {!loggedIn && (
               <Route
                 path="/signin"
-                element={
-                  <Login
-                    openErrorPopup={openErrorPopup}
-                    setCurrentUser={setCurrentUser}
-                    setLoggedIn={setLoggedIn}
-                  />
-                }
+                element={<Login logIn={logIn} />}
               />
             )}
-            <Route path="*" element={<NotFound />} />
+            <Route
+              path="*"
+              element={<NotFound />}
+            />
           </Routes>
           {isMenuPopupVisible && <MenuPopup menuPopupCloseHandler={menuPopupCloseButtonHandler} />}
           {isErrorPopupVisible && (

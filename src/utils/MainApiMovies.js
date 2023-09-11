@@ -1,4 +1,4 @@
-class ApiUsersMovies {
+class MainApiMovies {
   constructor(baseUrl) {
     this._baseUrl = baseUrl;
   }
@@ -56,7 +56,7 @@ class ApiUsersMovies {
   }
 }
 
-export const apiUsersMovies = new ApiUsersMovies(
-  'https://api.movie-searcher.nomoredomainsicu.ru'
-  /* 'http://localhost:4000' */
+export const apiUsersMovies = new MainApiMovies(
+  /* 'https://api.movie-searcher.nomoredomainsicu.ru' */
+  'http://localhost:4000'
 );
