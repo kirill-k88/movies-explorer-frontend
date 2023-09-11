@@ -2,7 +2,7 @@
 
 Репозиторий для фронтенда приложения `Movies Searcher`.
 
-ссылка на пулреквест: https://github.com/kirill-k88/movies-explorer-frontend
+ссылка на пулреквест: https://github.com/kirill-k88/movies-explorer-frontend/pull/2#issue-1889977482
 
 Адрес репозитория: https://github.com/kirill-k88/movies-explorer-frontend
 
