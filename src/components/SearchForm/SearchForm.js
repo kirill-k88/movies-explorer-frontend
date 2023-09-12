@@ -30,7 +30,7 @@ function SearchForm({ movies, setFilterdMovies, isLoading, setIsLoading, openErr
         const { search, isShortMovie, filterdResult } = JSON.parse(savedState);
         setValue('search', search || '');
         setIsShortMovie(isShortMovie || false);
-        setFilterdMovies(filterdResult || {});
+        setFilterdMovies(filterdResult || []);
       }
     }
     // eslint-disable-next-line
@@ -38,7 +38,7 @@ function SearchForm({ movies, setFilterdMovies, isLoading, setIsLoading, openErr
 
   useEffect(() => {
     if (location.pathname === '/saved-movies') {
-      setFilterdMovies(movies || {});
+      setFilterdMovies(movies || []);
     }
     // eslint-disable-next-line
   }, [movies]);
@@ -99,9 +99,7 @@ function SearchForm({ movies, setFilterdMovies, isLoading, setIsLoading, openErr
 
   return (
     <section className="search-form">
-      <form
-        className="search-form__form"
-        onSubmit={handleSubmit(onSubmit)}>
+      <form className="search-form__form" onSubmit={handleSubmit(onSubmit)}>
         <div className="search-form__container">
           <div className="search-form__input-container">
             <input
@@ -118,7 +116,8 @@ function SearchForm({ movies, setFilterdMovies, isLoading, setIsLoading, openErr
           <button
             className="search-form__button-submit"
             type="submit"
-            disabled={!isValid || isLoading}>
+            disabled={!isValid || isLoading}
+          >
             <img
               className="search-form__button-submit-image common-button"
               src={findImage}
@@ -134,7 +133,8 @@ function SearchForm({ movies, setFilterdMovies, isLoading, setIsLoading, openErr
               isShortMovie && 'search-form__checkbox_checked'
             } common-button`}
             onClick={setCheckBox}
-            disabled={!isValid || isLoading}></button>
+            disabled={isLoading}
+          ></button>
           <p className="search-form__checkbox-label">Короткометражки</p>
         </div>
       </form>

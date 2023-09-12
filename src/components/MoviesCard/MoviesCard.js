@@ -41,7 +41,7 @@ function MoviesCard({
           }
         }
       })
-      .catch(err => openErrorPopup(err));
+      .catch(err => openErrorPopup(err.message));
   }
 
   function onLikeClick() {
@@ -52,7 +52,7 @@ function MoviesCard({
           setIsLiked(true);
           addMovieToSavedList(movie);
         })
-        .catch(err => openErrorPopup(err));
+        .catch(err => openErrorPopup(err.message));
     } else {
       apiUsersMovies
         .deleteMovie(movie.movieId)
@@ -62,7 +62,7 @@ function MoviesCard({
             return Promise.reject(new Error(REMOVE_FROM_SAVEDLIST_ERROR_MESSAGE));
           }
         })
-        .catch(err => openErrorPopup(err));
+        .catch(err => openErrorPopup(err.message));
     }
   }
 
@@ -81,9 +81,7 @@ function MoviesCard({
         onClick={onCardClick}
       />
       <div className="movie-card__content-container">
-        <p
-          className="movie-card__description common-link"
-          onClick={onCardClick}>
+        <p className="movie-card__description common-link" onClick={onCardClick}>
           {movie.nameRU}
         </p>
         <button
@@ -94,11 +92,10 @@ function MoviesCard({
               ? 'movie-card__button-like_type_dislike'
               : 'movie-card__button-like_type_like'
           } common-button`}
-          onClick={location.pathname === '/saved-movies' ? onRemoveClick : onLikeClick}></button>
+          onClick={location.pathname === '/saved-movies' ? onRemoveClick : onLikeClick}
+        ></button>
       </div>
-      <p
-        className="movie-card__duration common-link"
-        onClick={onCardClick}>
+      <p className="movie-card__duration common-link" onClick={onCardClick}>
         {duration}
       </p>
     </div>

@@ -17,7 +17,7 @@ import { apiUsersMovies } from '../../utils/MainApiMovies';
 import { apiMovies } from '../../utils/MoviesApi';
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState();
   const [currentUser, setCurrentUser] = useState({});
   const [winSize, setWinSize] = useState([0, 0]);
   const [isMenuPopupVisible, setIsMenuPopupVisible] = useState(false);
@@ -55,10 +55,23 @@ function App() {
         setLoggedIn(true);
         navigate('/movies');
       })
-      .catch(err => openErrorPopup(err))
+      .catch(err => openErrorPopup(err.message))
       .finally(() => {
         setIsBlocked(false);
       });
+  }
+
+  function logout() {
+    apiUsers
+      .logout()
+      .then(res => {
+        if (res.answer === 'ok') {
+          setCurrentUser({});
+          setLoggedIn(false);
+          localStorage.setItem('searchMovies', JSON.stringify({}));
+        }
+      })
+      .catch(err => openErrorPopup(err.message));
   }
 
   function signUp(password, email, name, setIsBlocked) {
@@ -67,7 +80,7 @@ function App() {
       .then(userObject => {
         logIn(password, email);
       })
-      .catch(err => openErrorPopup(err))
+      .catch(err => openErrorPopup(err.message))
       .finally(() => {
         setIsBlocked(false);
       });
@@ -77,10 +90,19 @@ function App() {
     apiUsers
       .getUserInfo()
       .then(user => {
+        console.log('getUserInfo');
+        console.log('user', user);
         setCurrentUser(user);
         setLoggedIn(true);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        if (err.status === 401) {
+          logout();
+        }
+        console.log(err.message);
+      });
+    // eslint-disable-next-line
   }, []);
 
   useLayoutEffect(() => {
@@ -102,7 +124,7 @@ function App() {
       .then(allMovies => {
         setMovies(modifyMovies(allMovies));
       })
-      .catch(err => openErrorPopup(err))
+      .catch(err => openErrorPopup(err.message))
       .finally(() => setIsLoading(false));
     // eslint-disable-next-line
   }, []);
@@ -126,7 +148,9 @@ function App() {
   }
 
   useEffect(() => {
-    if (loggedIn) getSavedMovies();
+    if (loggedIn) {
+      getSavedMovies();
+    }
     // eslint-disable-next-line
   }, [loggedIn]);
 
@@ -137,7 +161,7 @@ function App() {
         .then(allMovies => {
           setSavedMovies(allMovies);
         })
-        .catch(err => openErrorPopup(err));
+        .catch(err => openErrorPopup(err.message));
     }
   }
 
@@ -165,12 +189,7 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={
-              <Main
-                headerMenuButtonHandler={headerMenuButtonHandler}
-                winSize={winSize}
-              />
-            }
+            element={<Main headerMenuButtonHandler={headerMenuButtonHandler} winSize={winSize} />}
           />
           <Route
             path="/movies"
@@ -225,22 +244,9 @@ function App() {
               />
             }
           />
-          {!loggedIn && (
-            <Route
-              path="/signup"
-              element={<Register signUp={signUp} />}
-            />
-          )}
-          {!loggedIn && (
-            <Route
-              path="/signin"
-              element={<Login logIn={logIn} />}
-            />
-          )}
-          <Route
-            path="/*"
-            element={<NotFound />}
-          />
+          {!loggedIn && <Route path="/signup" element={<Register signUp={signUp} />} />}
+          {!loggedIn && <Route path="/signin" element={<Login logIn={logIn} />} />}
+          <Route path="/*" element={<NotFound />} />
         </Routes>
         {isMenuPopupVisible && <MenuPopup menuPopupCloseHandler={menuPopupCloseButtonHandler} />}
         {isErrorPopupVisible && (

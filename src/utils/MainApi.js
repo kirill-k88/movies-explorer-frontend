@@ -2,7 +2,7 @@ import {
   DUPLICATE_EMAIL_ERROR_MESSAGE,
   MAIN_API_URL,
   SIGNUP_ERROR_MESSAGE,
-  WRONG_PASSWORD_MESSAGE
+  AUTHORISATION_ERROR_MESSAGE
 } from './constants';
 
 class MainApi {
@@ -12,18 +12,17 @@ class MainApi {
 
   _checkResponse(res) {
     if (!res.ok) {
-      let message;
-      console.log(res.status);
+      res.message = res.statusText;
       if (res.status === 401) {
-        message = WRONG_PASSWORD_MESSAGE;
+        res.message = AUTHORISATION_ERROR_MESSAGE;
       }
       if (res.status === 400) {
-        message = SIGNUP_ERROR_MESSAGE;
+        res.message = SIGNUP_ERROR_MESSAGE;
       }
       if (res.status === 409) {
-        message = DUPLICATE_EMAIL_ERROR_MESSAGE;
+        res.message = DUPLICATE_EMAIL_ERROR_MESSAGE;
       }
-      return Promise.reject(message || `Произошла ошибка: ${res.status}.`);
+      return Promise.reject(res);
     }
     return res.json();
   }
@@ -64,7 +63,10 @@ class MainApi {
   }
 
   getUserInfo() {
-    return this._request('/users/me', { headers: this._getHeaders(), credentials: 'include' });
+    return this._request(`/users/me?${new Date().getTime()}`, {
+      headers: this._getHeaders(),
+      credentials: 'include'
+    });
   }
 
   modifyUserInfo(userObject) {

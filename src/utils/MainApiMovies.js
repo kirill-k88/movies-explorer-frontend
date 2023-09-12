@@ -1,7 +1,7 @@
 import {
   DUPLICATE_MOVIE_ERROR_MESSAGE,
   MAIN_API_URL,
-  TIME_EXPIRED_ERROR_MESSAGE,
+  AUTHORISATION_ERROR_MESSAGE,
   VALIDATION_SERVER_ERROR_MESSAGE
 } from './constants';
 
@@ -12,17 +12,17 @@ class MainApiMovies {
 
   _checkResponse(res) {
     if (!res.ok) {
-      let message;
+      res.message = res.statusText;
       if (res.status === 400) {
-        message = VALIDATION_SERVER_ERROR_MESSAGE;
+        res.message = VALIDATION_SERVER_ERROR_MESSAGE;
       }
       if (res.status === 401) {
-        message = TIME_EXPIRED_ERROR_MESSAGE;
+        res.message = AUTHORISATION_ERROR_MESSAGE;
       }
       if (res.status === 409) {
-        message = DUPLICATE_MOVIE_ERROR_MESSAGE;
+        res.message = DUPLICATE_MOVIE_ERROR_MESSAGE;
       }
-      return Promise.reject(message || `Произошла ошибка: ${res.status}.`);
+      return Promise.reject(res);
     }
     return res.json();
   }
