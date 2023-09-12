@@ -27,6 +27,7 @@ function Movies({
         <SearchForm
           movies={savedMovies}
           setFilterdMovies={setFilterdMovies}
+          isLoading={isLoading}
           setIsLoading={setIsLoading}
           openErrorPopup={openErrorPopup}
         />

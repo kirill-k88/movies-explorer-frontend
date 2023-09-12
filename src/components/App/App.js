@@ -47,7 +47,7 @@ function App() {
     setIsErrorPopupVisible(true);
   }
 
-  function logIn(password, email) {
+  function logIn(password, email, setIsBlocked) {
     apiUsers
       .authorize(password, email)
       .then(userObject => {
@@ -55,17 +55,33 @@ function App() {
         setLoggedIn(true);
         navigate('/movies');
       })
-      .catch(err => openErrorPopup(err));
+      .catch(err => openErrorPopup(err))
+      .finally(() => {
+        setIsBlocked(false);
+      });
   }
 
-  function signUp(password, email, name) {
+  function signUp(password, email, name, setIsBlocked) {
     apiUsers
       .register(password, email, name)
       .then(userObject => {
         logIn(password, email);
       })
-      .catch(err => openErrorPopup(err));
+      .catch(err => openErrorPopup(err))
+      .finally(() => {
+        setIsBlocked(false);
+      });
   }
+
+  useEffect(() => {
+    apiUsers
+      .getUserInfo()
+      .then(user => {
+        setCurrentUser(user);
+        setLoggedIn(true);
+      })
+      .catch(err => console.log(err));
+  }, []);
 
   useLayoutEffect(() => {
     function updateSize() {
@@ -110,7 +126,7 @@ function App() {
   }
 
   useEffect(() => {
-    getSavedMovies();
+    if (loggedIn) getSavedMovies();
     // eslint-disable-next-line
   }, [loggedIn]);
 
@@ -142,16 +158,6 @@ function App() {
       return false;
     }
   }
-
-  useEffect(() => {
-    apiUsers
-      .getUserInfo()
-      .then(user => {
-        setCurrentUser(user);
-        setLoggedIn(true);
-      })
-      .catch(err => console.log(err));
-  }, []);
 
   return (
     <CurrentUserContext.Provider value={{ currentUser, loggedIn }}>
@@ -232,7 +238,7 @@ function App() {
             />
           )}
           <Route
-            path="*"
+            path="/*"
             element={<NotFound />}
           />
         </Routes>

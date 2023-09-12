@@ -9,7 +9,7 @@ import {
   SHORT_MOVIE_DURATION
 } from '../../utils/constants';
 
-function SearchForm({ movies, setFilterdMovies, setIsLoading, openErrorPopup }) {
+function SearchForm({ movies, setFilterdMovies, isLoading, setIsLoading, openErrorPopup }) {
   const [isShortMovie, setIsShortMovie] = useState(false);
   const location = useLocation();
 
@@ -108,6 +108,7 @@ function SearchForm({ movies, setFilterdMovies, setIsLoading, openErrorPopup }) 
               className="search-form__input"
               type="text"
               placeholder="Фильм"
+              disabled={isLoading}
               {...register('search', {
                 required: REQUIRED_ERROR_MESSAGE
               })}
@@ -117,7 +118,7 @@ function SearchForm({ movies, setFilterdMovies, setIsLoading, openErrorPopup }) 
           <button
             className="search-form__button-submit"
             type="submit"
-            disabled={!isValid}>
+            disabled={!isValid || isLoading}>
             <img
               className="search-form__button-submit-image common-button"
               src={findImage}
@@ -132,7 +133,8 @@ function SearchForm({ movies, setFilterdMovies, setIsLoading, openErrorPopup }) 
             className={`search-form__checkbox ${
               isShortMovie && 'search-form__checkbox_checked'
             } common-button`}
-            onClick={setCheckBox}></button>
+            onClick={setCheckBox}
+            disabled={!isValid || isLoading}></button>
           <p className="search-form__checkbox-label">Короткометражки</p>
         </div>
       </form>

@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import './Register.css';
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../../images/header/logo.svg';
 import { Link } from 'react-router-dom';
 import {
@@ -21,6 +21,8 @@ import {
 } from '../../utils/constants';
 
 function Register({ signUp }) {
+  const [isBlocked, setIsBlocked] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -30,8 +32,9 @@ function Register({ signUp }) {
   });
 
   function onSubmit(data) {
+    setIsBlocked(true);
     const { password, email, name } = data;
-    signUp(password, email, name);
+    signUp(password, email, name, setIsBlocked);
   }
 
   return (
@@ -56,6 +59,7 @@ function Register({ signUp }) {
               className="register__input"
               type="text"
               placeholder="Имя"
+              disabled={isBlocked}
               {...register('name', {
                 required: REQUIRED_ERROR_MESSAGE,
                 minLength: {
@@ -80,6 +84,7 @@ function Register({ signUp }) {
               className="register__input"
               type="text"
               placeholder="E-mail"
+              disabled={isBlocked}
               {...register('email', {
                 required: REQUIRED_ERROR_MESSAGE,
                 pattern: {
@@ -97,6 +102,7 @@ function Register({ signUp }) {
               type="password"
               title={PASSWORD_HINT}
               placeholder="password"
+              disabled={isBlocked}
               {...register('password', {
                 required: REQUIRED_ERROR_MESSAGE,
                 minLength: {
@@ -117,7 +123,7 @@ function Register({ signUp }) {
           <button
             className="register__button-signup common-button"
             type="submit"
-            disabled={!isValid}>
+            disabled={!isValid || isBlocked}>
             Зарегистрироваться
           </button>
           <div className="register__enter-container">

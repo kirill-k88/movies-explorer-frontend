@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import './Login.css';
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../../images/header/logo.svg';
 import { Link } from 'react-router-dom';
 import {
@@ -15,6 +15,7 @@ import {
 } from '../../utils/constants';
 
 function Login({ logIn }) {
+  const [isBlocked, setIsBlocked] = useState(false);
   const {
     register,
     handleSubmit,
@@ -24,8 +25,9 @@ function Login({ logIn }) {
   });
 
   function onSubmit(data) {
+    setIsBlocked(true);
     const { password, email } = data;
-    logIn(password, email);
+    logIn(password, email, setIsBlocked);
   }
 
   return (
@@ -50,6 +52,7 @@ function Login({ logIn }) {
               className="login__input"
               type="text"
               placeholder="E-mail"
+              disabled={isBlocked}
               {...register('email', {
                 required: REQUIRED_ERROR_MESSAGE,
                 pattern: {
@@ -67,6 +70,7 @@ function Login({ logIn }) {
               type="password"
               title={PASSWORD_HINT}
               placeholder="password"
+              disabled={isBlocked}
               {...register('password', {
                 required: REQUIRED_ERROR_MESSAGE,
                 minLength: {
@@ -86,7 +90,7 @@ function Login({ logIn }) {
           <button
             className="login__button-enter common-button"
             type="submit"
-            disabled={!isValid}>
+            disabled={!isValid || isBlocked}>
             Войти
           </button>
           <div className="login__register-container">

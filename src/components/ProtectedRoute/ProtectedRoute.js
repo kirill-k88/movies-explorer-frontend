@@ -4,7 +4,14 @@ import { useContext } from 'react';
 
 function ProtectedRoute({ element }) {
   const { loggedIn } = useContext(CurrentUserContext);
-  return loggedIn ? element : <Navigate to="/" replace />;
+  return loggedIn ? (
+    element
+  ) : (
+    <Navigate
+      to="/"
+      replace
+    />
+  );
 }
 
 export default ProtectedRoute;

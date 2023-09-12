@@ -27,6 +27,7 @@ function Profile({
 }) {
   const [enableEdit, setEnableEdit] = useState(false);
   const [apiError, setApiError] = useState('');
+  const [isBlocked, setIsBlocked] = useState(false);
   const { currentUser } = useContext(CurrentUserContext);
   const {
     register,
@@ -60,6 +61,7 @@ function Profile({
   }
 
   function onSubmit(data) {
+    setIsBlocked(true);
     apiUsers
       .modifyUserInfo(data)
       .then(res => {
@@ -68,11 +70,14 @@ function Profile({
       })
       .catch(err => {
         setApiError(UPDATE_PROFILE_ERROR_MESSAGE);
+      })
+      .finally(() => {
+        setTimeout(function () {
+          setApiError('');
+          setEnableEdit(false);
+          setIsBlocked(false);
+        }, 2000);
       });
-    setTimeout(function () {
-      setApiError('');
-      setEnableEdit(false);
-    }, 2000);
   }
 
   return (
@@ -83,6 +88,7 @@ function Profile({
       />
       <section className="profile">
         <h1 className="profile__header">{`Привет, ${currentUser.name}!`}</h1>
+
         <form
           className="profile__form"
           onSubmit={handleSubmit(onSubmit)}>
@@ -90,7 +96,7 @@ function Profile({
             <input
               className="profile__input"
               type="text"
-              disabled={!enableEdit && true}
+              disabled={!enableEdit || isBlocked}
               placeholder="Имя"
               {...register('name', {
                 required: REQUIRED_ERROR_MESSAGE,
@@ -117,7 +123,7 @@ function Profile({
               type="text"
               id="email"
               name="email"
-              disabled={!enableEdit && true}
+              disabled={!enableEdit || isBlocked}
               placeholder="E-mail"
               {...register('email', {
                 required: REQUIRED_ERROR_MESSAGE,
@@ -136,7 +142,7 @@ function Profile({
               <button
                 className="profile__button-save common-button"
                 type="submit"
-                disabled={!isValid || !isDirty}>
+                disabled={!isValid || !isDirty || isBlocked}>
                 Сохранить
               </button>
             </div>
