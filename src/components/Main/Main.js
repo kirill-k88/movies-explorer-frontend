@@ -8,10 +8,13 @@ import Portfolio from './Portfolio/Portfolio';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
-function Main({ headerMenuButtonHandler }) {
+function Main({ headerMenuButtonHandler, winSize }) {
   return (
     <>
-      <Header headerMenuButtonHandler={headerMenuButtonHandler} />
+      <Header
+        headerMenuButtonHandler={headerMenuButtonHandler}
+        winSize={winSize}
+      />
       <main className="main">
         <Promo />
         <NavTab />

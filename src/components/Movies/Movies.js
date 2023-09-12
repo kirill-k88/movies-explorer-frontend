@@ -10,16 +10,21 @@ function Movies({
   headerMenuButtonHandler,
   openErrorPopup,
   savedMovies,
-  getSavedMovies,
   movies,
   isLoading,
-  setIsLoading
+  setIsLoading,
+  addMovieToSavedList,
+  deleteMovieFromSavedList,
+  winSize
 }) {
   const [filtredMovies, setFilterdMovies] = useState({});
 
   return (
     <>
-      <Header headerMenuButtonHandler={headerMenuButtonHandler} />
+      <Header
+        headerMenuButtonHandler={headerMenuButtonHandler}
+        winSize={winSize}
+      />
       <main className="movies">
         <SearchForm
           movies={movies}
@@ -37,7 +42,9 @@ function Movies({
             openErrorPopup={openErrorPopup}
             setIsLoading={setIsLoading}
             savedMovies={savedMovies}
-            getSavedMovies={getSavedMovies}
+            addMovieToSavedList={addMovieToSavedList}
+            deleteMovieFromSavedList={deleteMovieFromSavedList}
+            winSize={winSize}
           />
         )}
       </main>

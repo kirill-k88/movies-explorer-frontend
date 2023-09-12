@@ -2,8 +2,15 @@ import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 import React, { useEffect, useState } from 'react';
 import { apiUsersMovies } from '../../utils/MainApiMovies';
+import { REMOVE_FROM_SAVEDLIST_ERROR_MESSAGE } from '../../utils/constants';
 
-function MoviesCard({ movie, openErrorPopup, savedMovies, getSavedMovies }) {
+function MoviesCard({
+  movie,
+  openErrorPopup,
+  savedMovies,
+  addMovieToSavedList,
+  deleteMovieFromSavedList
+}) {
   const [isliked, setIsLiked] = useState(false);
   const location = useLocation();
 
@@ -29,7 +36,9 @@ function MoviesCard({ movie, openErrorPopup, savedMovies, getSavedMovies }) {
       .deleteMovie(movie.movieId)
       .then(ret => {
         if (ret.acknowledged) {
-          getSavedMovies();
+          if (!deleteMovieFromSavedList(movie)) {
+            return Promise.reject(new Error(REMOVE_FROM_SAVEDLIST_ERROR_MESSAGE));
+          }
         }
       })
       .catch(err => openErrorPopup(err));
@@ -41,15 +50,17 @@ function MoviesCard({ movie, openErrorPopup, savedMovies, getSavedMovies }) {
         .sendNewMovie(movie)
         .then(retMovie => {
           setIsLiked(true);
-          getSavedMovies();
+          addMovieToSavedList(movie);
         })
         .catch(err => openErrorPopup(err));
     } else {
       apiUsersMovies
         .deleteMovie(movie.movieId)
-        .then(movie => {
+        .then(ret => {
           setIsLiked(false);
-          getSavedMovies();
+          if (!deleteMovieFromSavedList(movie)) {
+            return Promise.reject(new Error(REMOVE_FROM_SAVEDLIST_ERROR_MESSAGE));
+          }
         })
         .catch(err => openErrorPopup(err));
     }

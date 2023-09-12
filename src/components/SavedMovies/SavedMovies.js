@@ -6,13 +6,23 @@ import Preloader from '../Preloader/Preloader';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 
-function Movies({ headerMenuButtonHandler, openErrorPopup, savedMovies, getSavedMovies }) {
+function Movies({
+  headerMenuButtonHandler,
+  openErrorPopup,
+  savedMovies,
+  addMovieToSavedList,
+  deleteMovieFromSavedList,
+  winSize
+}) {
   const [filtredMovies, setFilterdMovies] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   return (
     <>
-      <Header headerMenuButtonHandler={headerMenuButtonHandler} />
+      <Header
+        headerMenuButtonHandler={headerMenuButtonHandler}
+        winSize={winSize}
+      />
       <main className="movies">
         <SearchForm
           movies={savedMovies}
@@ -30,8 +40,10 @@ function Movies({ headerMenuButtonHandler, openErrorPopup, savedMovies, getSaved
             baseUrl={apiMovies.getBaseUrl()}
             openErrorPopup={openErrorPopup}
             setIsLoading={setIsLoading}
-            getSavedMovies={getSavedMovies}
             savedMovies={savedMovies}
+            addMovieToSavedList={addMovieToSavedList}
+            deleteMovieFromSavedList={deleteMovieFromSavedList}
+            winSize={winSize}
           />
         )}
       </main>

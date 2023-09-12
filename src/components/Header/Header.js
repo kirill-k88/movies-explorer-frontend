@@ -5,28 +5,29 @@ import HeaderLoginContainer from './HeaderLoginContainer/HeaderLoginContainer';
 import ProfileButton from '../ProfileButton/ProfileButton';
 import HeaderMenu from './HeaderMenu/HeaderMenu';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
-import { WindowSizeContext } from '../../contexts/WindowSizeContext.js';
 import { useContext } from 'react';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-function Header({ headerMenuButtonHandler }) {
+function Header({ headerMenuButtonHandler, winSize }) {
   const { currentUser, loggedIn } = useContext(CurrentUserContext);
-  const size = useContext(WindowSizeContext);
   const location = useLocation();
 
   return (
     <header
-      className={`header ${location.pathname === '/' ? 'header_type_blue' : 'header_type_white'}`}
-    >
+      className={`header ${location.pathname === '/' ? 'header_type_blue' : 'header_type_white'}`}>
       <div className="header__container">
         <Link to="/">
-          <img className="header__logo common-button" src={logo} alt="Лого" />
+          <img
+            className="header__logo common-button"
+            src={logo}
+            alt="Лого"
+          />
         </Link>
-        {loggedIn && currentUser.name && size[0] > 768 && <Navigation isPopup={false} />}
+        {loggedIn && currentUser.name && winSize[0] > 768 && <Navigation isPopup={false} />}
         <div className="header__button-container">
           {loggedIn && currentUser.name ? (
-            size[0] > 768 ? (
+            winSize[0] > 768 ? (
               <ProfileButton />
             ) : (
               <HeaderMenu headerMenuButtonHandler={headerMenuButtonHandler} />

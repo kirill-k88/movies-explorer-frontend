@@ -1,7 +1,6 @@
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
-import { WindowSizeContext } from '../../contexts/WindowSizeContext.js';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import Main from '../Main/Main';
 import Movies from '../Movies/Movies';
@@ -20,7 +19,7 @@ import { apiMovies } from '../../utils/MoviesApi';
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
-  const [size, setSize] = useState([0, 0]);
+  const [winSize, setWinSize] = useState([0, 0]);
   const [isMenuPopupVisible, setIsMenuPopupVisible] = useState(false);
   const [isErrorPopupVisible, setIsErrorPopupVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -71,7 +70,7 @@ function App() {
   useLayoutEffect(() => {
     function updateSize() {
       setTimeout(function () {
-        setSize([window.innerWidth, window.innerHeight]);
+        setWinSize([window.innerWidth, window.innerHeight]);
       }, 500);
     }
     window.addEventListener('resize', updateSize);
@@ -126,6 +125,24 @@ function App() {
     }
   }
 
+  function addMovieToSavedList(movie) {
+    const newMoviesList = savedMovies.slice();
+    newMoviesList.push(movie);
+    setSavedMovies(newMoviesList);
+  }
+
+  function deleteMovieFromSavedList(movie) {
+    const index = savedMovies.findIndex(smovie => smovie.movieId === movie.movieId);
+    if (index >= 0) {
+      const newMoviesList = savedMovies.slice();
+      newMoviesList.splice(index, 1);
+      setSavedMovies(newMoviesList);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   useEffect(() => {
     apiUsers
       .getUserInfo()
@@ -138,89 +155,96 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={{ currentUser, loggedIn }}>
-      <WindowSizeContext.Provider value={size}>
-        <div className="app">
-          <Routes>
-            <Route
-              path="/"
-              element={<Main headerMenuButtonHandler={headerMenuButtonHandler} />}
-            />
-            <Route
-              path="/movies"
-              element={
-                <ProtectedRoute
-                  element={
-                    <Movies
-                      headerMenuButtonHandler={headerMenuButtonHandler}
-                      openErrorPopup={openErrorPopup}
-                      savedMovies={savedMovies}
-                      getSavedMovies={getSavedMovies}
-                      isLoading={isLoading}
-                      movies={movies}
-                      setIsLoading={setIsLoading}
-                    />
-                  }
-                />
-              }
-            />
-            <Route
-              path="/saved-movies"
-              element={
-                <ProtectedRoute
-                  element={
-                    <SavedMovies
-                      headerMenuButtonHandler={headerMenuButtonHandler}
-                      openErrorPopup={openErrorPopup}
-                      savedMovies={savedMovies}
-                      setSavedMovies={setSavedMovies}
-                      getSavedMovies={getSavedMovies}
-                    />
-                  }
-                />
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute
-                  element={
-                    <Profile
-                      headerMenuButtonHandler={headerMenuButtonHandler}
-                      openErrorPopup={openErrorPopup}
-                      setCurrentUser={setCurrentUser}
-                      setLoggedIn={setLoggedIn}
-                    />
-                  }
-                />
-              }
-            />
-            {!loggedIn && (
-              <Route
-                path="/signup"
-                element={<Register signUp={signUp} />}
+      <div className="app">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Main
+                headerMenuButtonHandler={headerMenuButtonHandler}
+                winSize={winSize}
               />
-            )}
-            {!loggedIn && (
-              <Route
-                path="/signin"
-                element={<Login logIn={logIn} />}
+            }
+          />
+          <Route
+            path="/movies"
+            element={
+              <ProtectedRoute
+                element={
+                  <Movies
+                    headerMenuButtonHandler={headerMenuButtonHandler}
+                    openErrorPopup={openErrorPopup}
+                    savedMovies={savedMovies}
+                    isLoading={isLoading}
+                    movies={movies}
+                    setIsLoading={setIsLoading}
+                    addMovieToSavedList={addMovieToSavedList}
+                    deleteMovieFromSavedList={deleteMovieFromSavedList}
+                    winSize={winSize}
+                  />
+                }
               />
-            )}
+            }
+          />
+          <Route
+            path="/saved-movies"
+            element={
+              <ProtectedRoute
+                element={
+                  <SavedMovies
+                    headerMenuButtonHandler={headerMenuButtonHandler}
+                    openErrorPopup={openErrorPopup}
+                    savedMovies={savedMovies}
+                    setSavedMovies={setSavedMovies}
+                    deleteMovieFromSavedList={deleteMovieFromSavedList}
+                    winSize={winSize}
+                  />
+                }
+              />
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute
+                element={
+                  <Profile
+                    headerMenuButtonHandler={headerMenuButtonHandler}
+                    openErrorPopup={openErrorPopup}
+                    setCurrentUser={setCurrentUser}
+                    setLoggedIn={setLoggedIn}
+                    winSize={winSize}
+                  />
+                }
+              />
+            }
+          />
+          {!loggedIn && (
             <Route
-              path="*"
-              element={<NotFound />}
-            />
-          </Routes>
-          {isMenuPopupVisible && <MenuPopup menuPopupCloseHandler={menuPopupCloseButtonHandler} />}
-          {isErrorPopupVisible && (
-            <ErrorPopup
-              errorPopupCloseHandler={errorPopupCloseButtonHandler}
-              errorMessage={errorMessage}
-              isBlack={isBlackMessage}
+              path="/signup"
+              element={<Register signUp={signUp} />}
             />
           )}
-        </div>
-      </WindowSizeContext.Provider>
+          {!loggedIn && (
+            <Route
+              path="/signin"
+              element={<Login logIn={logIn} />}
+            />
+          )}
+          <Route
+            path="*"
+            element={<NotFound />}
+          />
+        </Routes>
+        {isMenuPopupVisible && <MenuPopup menuPopupCloseHandler={menuPopupCloseButtonHandler} />}
+        {isErrorPopupVisible && (
+          <ErrorPopup
+            errorPopupCloseHandler={errorPopupCloseButtonHandler}
+            errorMessage={errorMessage}
+            isBlack={isBlackMessage}
+          />
+        )}
+      </div>
     </CurrentUserContext.Provider>
   );
 }

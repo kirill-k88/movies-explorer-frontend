@@ -1,3 +1,10 @@
+import {
+  DUPLICATE_MOVIE_ERROR_MESSAGE,
+  MAIN_API_URL,
+  TIME_EXPIRED_ERROR_MESSAGE,
+  VALIDATION_SERVER_ERROR_MESSAGE
+} from './constants';
+
 class MainApiMovies {
   constructor(baseUrl) {
     this._baseUrl = baseUrl;
@@ -7,13 +14,13 @@ class MainApiMovies {
     if (!res.ok) {
       let message;
       if (res.status === 400) {
-        message = 'На сервере произошла ошибка валидации при добавлении фильма.';
+        message = VALIDATION_SERVER_ERROR_MESSAGE;
       }
       if (res.status === 401) {
-        message = 'Время действия куки истекло. Необходима перерегистрация.';
+        message = TIME_EXPIRED_ERROR_MESSAGE;
       }
       if (res.status === 409) {
-        message = 'Фильм уже есть в списке пользователя';
+        message = DUPLICATE_MOVIE_ERROR_MESSAGE;
       }
       return Promise.reject(message || `Произошла ошибка: ${res.status}.`);
     }
@@ -56,7 +63,4 @@ class MainApiMovies {
   }
 }
 
-export const apiUsersMovies = new MainApiMovies(
-  'https://api.movie-searcher.nomoredomainsicu.ru'
-  /* 'http://localhost:4000' */
-);
+export const apiUsersMovies = new MainApiMovies(MAIN_API_URL);

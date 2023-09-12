@@ -1,3 +1,10 @@
+import {
+  DUPLICATE_EMAIL_ERROR_MESSAGE,
+  MAIN_API_URL,
+  SIGNUP_ERROR_MESSAGE,
+  WRONG_PASSWORD_MESSAGE
+} from './constants';
+
 class MainApi {
   constructor(baseUrl) {
     this._baseUrl = baseUrl;
@@ -8,13 +15,13 @@ class MainApi {
       let message;
       console.log(res.status);
       if (res.status === 401) {
-        message = 'Вы ввели неправильный логин или пароль.';
+        message = WRONG_PASSWORD_MESSAGE;
       }
       if (res.status === 400) {
-        message = 'При регистрации пользователя произошла ошибка.';
+        message = SIGNUP_ERROR_MESSAGE;
       }
       if (res.status === 409) {
-        message = 'Пользователь с таким email уже существует.';
+        message = DUPLICATE_EMAIL_ERROR_MESSAGE;
       }
       return Promise.reject(message || `Произошла ошибка: ${res.status}.`);
     }
@@ -69,7 +76,4 @@ class MainApi {
     });
   }
 }
-export const apiUsers = new MainApi(
-  'https://api.movie-searcher.nomoredomainsicu.ru'
-  /* 'http://localhost:4000' */
-);
+export const apiUsers = new MainApi(MAIN_API_URL);

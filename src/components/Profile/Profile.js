@@ -5,7 +5,13 @@ import React, { useContext, useState } from 'react';
 import Header from '../Header/Header';
 import { apiUsers } from '../../utils/MainApi';
 
-function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setLoggedIn }) {
+function Profile({
+  headerMenuButtonHandler,
+  openErrorPopup,
+  setCurrentUser,
+  setLoggedIn,
+  winSize
+}) {
   const [enableEdit, setEnableEdit] = useState(false);
   const [apiError, setApiError] = useState('');
   const { currentUser } = useContext(CurrentUserContext);
@@ -58,7 +64,10 @@ function Profile({ headerMenuButtonHandler, openErrorPopup, setCurrentUser, setL
 
   return (
     <>
-      <Header headerMenuButtonHandler={headerMenuButtonHandler} />
+      <Header
+        headerMenuButtonHandler={headerMenuButtonHandler}
+        winSize={winSize}
+      />
       <section className="profile">
         <h1 className="profile__header">{`Привет, ${currentUser.name}!`}</h1>
         <form
