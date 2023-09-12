@@ -3,6 +3,16 @@ import './Login.css';
 import React from 'react';
 import logo from '../../images/header/logo.svg';
 import { Link } from 'react-router-dom';
+import {
+  EMAIL_REGEXP,
+  PASSWORD_HINT,
+  PASSWORD_MIN_LENGTH,
+  PASSWORD_MIN_LENGTH_ERROR_MESSAGE,
+  PASSWORD_REGEXP,
+  PASSWORD_VALIDATION_ERROR_MESSAGE,
+  REQUIRED_ERROR_MESSAGE,
+  WRONG_EMAIL_MESSAGE
+} from '../../utils/constants';
 
 function Login({ logIn }) {
   const {
@@ -41,10 +51,10 @@ function Login({ logIn }) {
               type="text"
               placeholder="E-mail"
               {...register('email', {
-                required: 'Поле не может быть пустым.',
+                required: REQUIRED_ERROR_MESSAGE,
                 pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i,
-                  message: 'Введено не корректное значение E-mail.'
+                  value: EMAIL_REGEXP,
+                  message: WRONG_EMAIL_MESSAGE
                 }
               })}
             />
@@ -55,18 +65,17 @@ function Login({ logIn }) {
             <input
               className="login__input login__input_type_password"
               type="password"
-              title="Пароль должен содержать лат. буквы в разных регистрах, не менее одной цифры и одного спецсивола: !@#$&*"
+              title={PASSWORD_HINT}
               placeholder="password"
               {...register('password', {
-                required: 'Поле не может быть пустым.',
+                required: REQUIRED_ERROR_MESSAGE,
                 minLength: {
-                  value: 8,
-                  message: 'Длинна должна быть от 8 символов'
+                  value: PASSWORD_MIN_LENGTH,
+                  message: PASSWORD_MIN_LENGTH_ERROR_MESSAGE
                 },
                 pattern: {
-                  value: /^(?=.*[A-Z].*)(?=.*[!@#$&*])(?=.*[0-9].*)(?=.*[a-z].*).*$/,
-                  message:
-                    'Пароль должен содержать лат. буквы в разных регистрах, не менее одной цифры и одного спецсивола: !@#$&*'
+                  value: PASSWORD_REGEXP,
+                  message: PASSWORD_VALIDATION_ERROR_MESSAGE
                 }
               })}
             />

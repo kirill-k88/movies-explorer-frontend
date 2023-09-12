@@ -3,8 +3,13 @@ import React, { useEffect, useState } from 'react';
 import findImage from '../../images/search/find.svg';
 import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
+import {
+  NO_DATA_ERROR_MESSAGE,
+  REQUIRED_ERROR_MESSAGE,
+  SHORT_MOVIE_DURATION
+} from '../../utils/constants';
 
-function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading, openErrorPopup }) {
+function SearchForm({ movies, setFilterdMovies, setIsLoading, openErrorPopup }) {
   const [isShortMovie, setIsShortMovie] = useState(false);
   const location = useLocation();
 
@@ -48,7 +53,7 @@ function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading, ope
   function filterShortMovies(movies) {
     const result = [];
     for (let i = 0; i < movies.length; i++) {
-      if (movies[i].duration <= 40) {
+      if (movies[i].duration <= SHORT_MOVIE_DURATION) {
         result.push(movies[i]);
       }
     }
@@ -88,13 +93,15 @@ function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading, ope
     }
     setTimeout(function () {
       setIsLoading(false);
-      filterdResult.length === 0 && openErrorPopup('Ничего не найдено.');
+      filterdResult.length === 0 && openErrorPopup(NO_DATA_ERROR_MESSAGE);
     }, 1000);
   }
 
   return (
     <section className="search-form">
-      <form className="search-form__form" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="search-form__form"
+        onSubmit={handleSubmit(onSubmit)}>
         <div className="search-form__container">
           <div className="search-form__input-container">
             <input
@@ -102,12 +109,15 @@ function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading, ope
               type="text"
               placeholder="Фильм"
               {...register('search', {
-                required: 'Поле не может быть пустым.'
+                required: REQUIRED_ERROR_MESSAGE
               })}
             />
             {errors?.search && <span className="search-form__error">{errors.search.message}</span>}
           </div>
-          <button className="search-form__button-submit" type="submit" disabled={!isValid}>
+          <button
+            className="search-form__button-submit"
+            type="submit"
+            disabled={!isValid}>
             <img
               className="search-form__button-submit-image common-button"
               src={findImage}
@@ -122,8 +132,7 @@ function SearchForm({ movies, filtredMovies, setFilterdMovies, setIsLoading, ope
             className={`search-form__checkbox ${
               isShortMovie && 'search-form__checkbox_checked'
             } common-button`}
-            onClick={setCheckBox}
-          ></button>
+            onClick={setCheckBox}></button>
           <p className="search-form__checkbox-label">Короткометражки</p>
         </div>
       </form>

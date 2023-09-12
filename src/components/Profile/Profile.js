@@ -4,6 +4,19 @@ import './Profile.css';
 import React, { useContext, useState } from 'react';
 import Header from '../Header/Header';
 import { apiUsers } from '../../utils/MainApi';
+import {
+  EMAIL_REGEXP,
+  NAME_MAX_LENGTH,
+  NAME_MAX_LENGTH_ERROR_MESSAGE,
+  NAME_MIN_LENGTH,
+  NAME_MIN_LENGTH_ERROR_MESSAGE,
+  NAME_REGEXP,
+  NAME_VALIDATION_ERROR_MESSAGE,
+  REQUIRED_ERROR_MESSAGE,
+  UPDATE_PROFILE_ERROR_MESSAGE,
+  UPDATE_PROFILE_SUCCESS_MESSAGE,
+  WRONG_EMAIL_MESSAGE
+} from '../../utils/constants';
 
 function Profile({
   headerMenuButtonHandler,
@@ -51,10 +64,10 @@ function Profile({
       .modifyUserInfo(data)
       .then(res => {
         setCurrentUser(res);
-        openErrorPopup('Данные успешно обновлены.', true);
+        openErrorPopup(UPDATE_PROFILE_SUCCESS_MESSAGE, true);
       })
       .catch(err => {
-        setApiError('При обновлении профиля произошла ошибка.');
+        setApiError(UPDATE_PROFILE_ERROR_MESSAGE);
       });
     setTimeout(function () {
       setApiError('');
@@ -80,18 +93,18 @@ function Profile({
               disabled={!enableEdit && true}
               placeholder="Имя"
               {...register('name', {
-                required: 'Поле не может быть пустым.',
+                required: REQUIRED_ERROR_MESSAGE,
                 minLength: {
-                  value: 2,
-                  message: 'Длинна должна быть от 2 символов'
+                  value: NAME_MIN_LENGTH,
+                  message: NAME_MIN_LENGTH_ERROR_MESSAGE
                 },
                 maxLength: {
-                  value: 30,
-                  message: 'Длинна должна до 30 символов'
+                  value: NAME_MAX_LENGTH,
+                  message: NAME_MAX_LENGTH_ERROR_MESSAGE
                 },
                 pattern: {
-                  value: /^[a-zA-Zа-яА-Я-\s]*$/,
-                  message: 'В имени допускается использовать только буквы, тире и пробел.'
+                  value: NAME_REGEXP,
+                  message: NAME_VALIDATION_ERROR_MESSAGE
                 }
               })}
             />
@@ -107,10 +120,10 @@ function Profile({
               disabled={!enableEdit && true}
               placeholder="E-mail"
               {...register('email', {
-                required: 'Поле не может быть пустым.',
+                required: REQUIRED_ERROR_MESSAGE,
                 pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i,
-                  message: 'Введено не корректное значение E-mail.'
+                  value: EMAIL_REGEXP,
+                  message: WRONG_EMAIL_MESSAGE
                 }
               })}
             />

@@ -2,6 +2,14 @@ import './MoviesCardList.css';
 import React, { useEffect, useState } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { useLocation } from 'react-router-dom';
+import {
+  ADD_CARD_COUNT_FOR_1280,
+  ADD_CARD_COUNT_FOR_320,
+  ADD_CARD_COUNT_FOR_768,
+  INITIAL_CARD_COUNT_FOR_1280,
+  INITIAL_CARD_COUNT_FOR_320,
+  INITIAL_CARD_COUNT_FOR_768
+} from '../../utils/constants';
 
 function MoviesCardList({
   filtredMovies,
@@ -17,7 +25,12 @@ function MoviesCardList({
   const location = useLocation();
 
   function onAddButtonClick() {
-    const addCardsCount = winSize[0] > 768 ? 4 : winSize[0] > 500 ? 2 : 2;
+    const addCardsCount =
+      winSize[0] > 768
+        ? ADD_CARD_COUNT_FOR_1280
+        : winSize[0] > 500
+        ? ADD_CARD_COUNT_FOR_768
+        : ADD_CARD_COUNT_FOR_320;
     setLastMovieId(lastMovieId + addCardsCount);
     setTimeout(function () {
       scrollToBottom();
@@ -25,7 +38,13 @@ function MoviesCardList({
   }
 
   useEffect(() => {
-    setLastMovieId(winSize[0] > 768 ? 16 : winSize[0] > 500 ? 8 : 5);
+    setLastMovieId(
+      winSize[0] > 768
+        ? INITIAL_CARD_COUNT_FOR_1280
+        : winSize[0] > 500
+        ? INITIAL_CARD_COUNT_FOR_768
+        : INITIAL_CARD_COUNT_FOR_320
+    );
     // eslint-disable-next-line
   }, []);
 

@@ -3,6 +3,22 @@ import './Register.css';
 import React from 'react';
 import logo from '../../images/header/logo.svg';
 import { Link } from 'react-router-dom';
+import {
+  EMAIL_REGEXP,
+  NAME_MAX_LENGTH,
+  NAME_MAX_LENGTH_ERROR_MESSAGE,
+  NAME_MIN_LENGTH,
+  NAME_MIN_LENGTH_ERROR_MESSAGE,
+  NAME_REGEXP,
+  NAME_VALIDATION_ERROR_MESSAGE,
+  PASSWORD_HINT,
+  PASSWORD_MIN_LENGTH,
+  PASSWORD_MIN_LENGTH_ERROR_MESSAGE,
+  PASSWORD_REGEXP,
+  PASSWORD_VALIDATION_ERROR_MESSAGE,
+  REQUIRED_ERROR_MESSAGE,
+  WRONG_EMAIL_MESSAGE
+} from '../../utils/constants';
 
 function Register({ signUp }) {
   const {
@@ -41,18 +57,18 @@ function Register({ signUp }) {
               type="text"
               placeholder="Имя"
               {...register('name', {
-                required: 'Поле не может быть пустым.',
+                required: REQUIRED_ERROR_MESSAGE,
                 minLength: {
-                  value: 2,
-                  message: 'Длинна должна быть от 2 символов'
+                  value: NAME_MIN_LENGTH,
+                  message: NAME_MIN_LENGTH_ERROR_MESSAGE
                 },
                 maxLength: {
-                  value: 30,
-                  message: 'Длинна должна до 30 символов'
+                  value: NAME_MAX_LENGTH,
+                  message: NAME_MAX_LENGTH_ERROR_MESSAGE
                 },
                 pattern: {
-                  value: /^[a-zA-Zа-яА-Я-\s]*$/,
-                  message: 'В имени допускается использовать только буквы, тире и пробел.'
+                  value: NAME_REGEXP,
+                  message: NAME_VALIDATION_ERROR_MESSAGE
                 }
               })}
             />
@@ -65,10 +81,10 @@ function Register({ signUp }) {
               type="text"
               placeholder="E-mail"
               {...register('email', {
-                required: 'Поле не может быть пустым.',
+                required: REQUIRED_ERROR_MESSAGE,
                 pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i,
-                  message: 'Введено не корректное значение E-mail.'
+                  value: EMAIL_REGEXP,
+                  message: WRONG_EMAIL_MESSAGE
                 }
               })}
             />
@@ -79,18 +95,17 @@ function Register({ signUp }) {
             <input
               className="register__input register__input_type_password"
               type="password"
-              title="Пароль должен содержать лат. буквы в разных регистрах, не менее одной цифры и одного спецсивола: !@#$&*"
+              title={PASSWORD_HINT}
               placeholder="password"
               {...register('password', {
-                required: 'Поле не может быть пустым.',
+                required: REQUIRED_ERROR_MESSAGE,
                 minLength: {
-                  value: 8,
-                  message: 'Длинна должна быть от 8 символов'
+                  value: PASSWORD_MIN_LENGTH,
+                  message: PASSWORD_MIN_LENGTH_ERROR_MESSAGE
                 },
                 pattern: {
-                  value: /^(?=.*[A-Z].*)(?=.*[!@#$&*])(?=.*[0-9].*)(?=.*[a-z].*).*$/,
-                  message:
-                    'Пароль должен содержать лат. буквы в разных регистрах, не менее одной цифры и одного спецсивола: !@#$&*'
+                  value: PASSWORD_REGEXP,
+                  message: PASSWORD_VALIDATION_ERROR_MESSAGE
                 }
               })}
             />

@@ -28,7 +28,6 @@ function Movies({
       <main className="movies">
         <SearchForm
           movies={movies}
-          filtredMovies={filtredMovies}
           setFilterdMovies={setFilterdMovies}
           setIsLoading={setIsLoading}
           openErrorPopup={openErrorPopup}
