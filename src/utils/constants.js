@@ -12,7 +12,7 @@ export const DUPLICATE_EMAIL_ERROR_MESSAGE = 'Пользователь с так
 export const VALIDATION_SERVER_ERROR_MESSAGE =
   'На сервере произошла ошибка валидации при добавлении фильма.';
 
-export const AUTHORISATION_ERROR_MESSAGE = 'Ошибка авторизации. Необходима повторить вход.';
+export const AUTHORISATION_ERROR_MESSAGE = 'Ошибка авторизации. Необходимо повторить вход.';
 
 export const DUPLICATE_MOVIE_ERROR_MESSAGE = 'Фильм уже есть в списке пользователя.';
 

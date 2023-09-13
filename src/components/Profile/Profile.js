@@ -23,7 +23,8 @@ function Profile({
   openErrorPopup,
   setCurrentUser,
   setLoggedIn,
-  winSize
+  winSize,
+  logout
 }) {
   const [enableEdit, setEnableEdit] = useState(false);
   const [apiError, setApiError] = useState('');
@@ -41,8 +42,6 @@ function Profile({
       email: currentUser.email
     }
   });
-
-  console.log(currentUser);
 
   function onEditButtonClick(data) {
     setEnableEdit(true);
@@ -67,11 +66,23 @@ function Profile({
     apiUsers
       .modifyUserInfo(data)
       .then(res => {
+        reset(
+          {
+            name: res.name,
+            email: res.email
+          },
+          { keepDirty: false }
+        );
         setCurrentUser(res);
         openErrorPopup(UPDATE_PROFILE_SUCCESS_MESSAGE, true);
       })
       .catch(err => {
-        setApiError(UPDATE_PROFILE_ERROR_MESSAGE);
+        if (err.status === 401) {
+          openErrorPopup(err.message);
+          logout();
+        }
+        console.log(err.message);
+        setApiError(err.message || UPDATE_PROFILE_ERROR_MESSAGE);
       })
       .finally(() => {
         setTimeout(function () {
@@ -84,11 +95,16 @@ function Profile({
 
   return (
     <>
-      <Header headerMenuButtonHandler={headerMenuButtonHandler} winSize={winSize} />
+      <Header
+        headerMenuButtonHandler={headerMenuButtonHandler}
+        winSize={winSize}
+      />
       <section className="profile">
         <h1 className="profile__header">{`Привет, ${currentUser.name}!`}</h1>
 
-        <form className="profile__form" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className="profile__form"
+          onSubmit={handleSubmit(onSubmit)}>
           <div className="profile__input-container  profile__input-container_bordered">
             <input
               className="profile__input"
@@ -139,8 +155,7 @@ function Profile({
               <button
                 className="profile__button-save common-button"
                 type="submit"
-                disabled={!isValid || !isDirty || isBlocked}
-              >
+                disabled={!isValid || !isDirty || isBlocked}>
                 Сохранить
               </button>
             </div>
@@ -150,11 +165,13 @@ function Profile({
               <button
                 className="profile__button-edit common-button"
                 type="button"
-                onClick={onEditButtonClick}
-              >
+                onClick={onEditButtonClick}>
                 Редактировать
               </button>
-              <button className="profile__button-exit common-button" type="button" onClick={onExit}>
+              <button
+                className="profile__button-exit common-button"
+                type="button"
+                onClick={onExit}>
                 Выйти из аккаунта
               </button>
             </>

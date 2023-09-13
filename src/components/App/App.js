@@ -90,13 +90,10 @@ function App() {
     apiUsers
       .getUserInfo()
       .then(user => {
-        console.log('getUserInfo');
-        console.log('user', user);
         setCurrentUser(user);
         setLoggedIn(true);
       })
       .catch(err => {
-        console.log(err);
         if (err.status === 401) {
           logout();
         }
@@ -189,7 +186,12 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<Main headerMenuButtonHandler={headerMenuButtonHandler} winSize={winSize} />}
+            element={
+              <Main
+                headerMenuButtonHandler={headerMenuButtonHandler}
+                winSize={winSize}
+              />
+            }
           />
           <Route
             path="/movies"
@@ -239,14 +241,28 @@ function App() {
                     setCurrentUser={setCurrentUser}
                     setLoggedIn={setLoggedIn}
                     winSize={winSize}
+                    logout={logout}
                   />
                 }
               />
             }
           />
-          {!loggedIn && <Route path="/signup" element={<Register signUp={signUp} />} />}
-          {!loggedIn && <Route path="/signin" element={<Login logIn={logIn} />} />}
-          <Route path="/*" element={<NotFound />} />
+          {!loggedIn && (
+            <Route
+              path="/signup"
+              element={<Register signUp={signUp} />}
+            />
+          )}
+          {!loggedIn && (
+            <Route
+              path="/signin"
+              element={<Login logIn={logIn} />}
+            />
+          )}
+          <Route
+            path="/*"
+            element={<NotFound />}
+          />
         </Routes>
         {isMenuPopupVisible && <MenuPopup menuPopupCloseHandler={menuPopupCloseButtonHandler} />}
         {isErrorPopupVisible && (

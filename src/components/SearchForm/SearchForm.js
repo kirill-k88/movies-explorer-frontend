@@ -43,13 +43,6 @@ function SearchForm({ movies, setFilterdMovies, isLoading, setIsLoading, openErr
     // eslint-disable-next-line
   }, [movies]);
 
-  function setCheckBox() {
-    setIsShortMovie(!isShortMovie);
-    if (getValues('search').length === 0) {
-      setValue('search', ' ');
-    }
-  }
-
   function filterShortMovies(movies) {
     const result = [];
     for (let i = 0; i < movies.length; i++) {
@@ -73,9 +66,7 @@ function SearchForm({ movies, setFilterdMovies, isLoading, setIsLoading, openErr
     return result;
   }
 
-  function onSubmit(data) {
-    setIsLoading(true);
-
+  function FilterActions(data, isShortMovie) {
     let filterdResult;
 
     if (isShortMovie) {
@@ -91,6 +82,32 @@ function SearchForm({ movies, setFilterdMovies, isLoading, setIsLoading, openErr
         JSON.stringify({ filterdResult, search: data.search, isShortMovie })
       );
     }
+
+    return filterdResult;
+  }
+
+  function onSubmit(data) {
+    setIsLoading(true);
+
+    const filterdResult = FilterActions(data, isShortMovie);
+
+    setTimeout(function () {
+      setIsLoading(false);
+      filterdResult.length === 0 && openErrorPopup(NO_DATA_ERROR_MESSAGE);
+    }, 1000);
+  }
+
+  function onCheckBox() {
+    setIsLoading(true);
+
+    if (location.pathname === '/movies' && getValues('search') === '') {
+      setIsLoading(false);
+      return;
+    }
+
+    const filterdResult = FilterActions({ search: getValues('search') }, !isShortMovie);
+    setIsShortMovie(!isShortMovie);
+
     setTimeout(function () {
       setIsLoading(false);
       filterdResult.length === 0 && openErrorPopup(NO_DATA_ERROR_MESSAGE);
@@ -99,7 +116,9 @@ function SearchForm({ movies, setFilterdMovies, isLoading, setIsLoading, openErr
 
   return (
     <section className="search-form">
-      <form className="search-form__form" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="search-form__form"
+        onSubmit={handleSubmit(onSubmit)}>
         <div className="search-form__container">
           <div className="search-form__input-container">
             <input
@@ -116,8 +135,7 @@ function SearchForm({ movies, setFilterdMovies, isLoading, setIsLoading, openErr
           <button
             className="search-form__button-submit"
             type="submit"
-            disabled={!isValid || isLoading}
-          >
+            disabled={!isValid || isLoading}>
             <img
               className="search-form__button-submit-image common-button"
               src={findImage}
@@ -128,13 +146,12 @@ function SearchForm({ movies, setFilterdMovies, isLoading, setIsLoading, openErr
 
         <div className="search-form__checkbox-container">
           <button
-            type="submit"
+            type="button"
             className={`search-form__checkbox ${
               isShortMovie && 'search-form__checkbox_checked'
             } common-button`}
-            onClick={setCheckBox}
-            disabled={isLoading}
-          ></button>
+            onClick={onCheckBox}
+            disabled={isLoading}></button>
           <p className="search-form__checkbox-label">Короткометражки</p>
         </div>
       </form>
