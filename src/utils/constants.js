@@ -1,5 +1,5 @@
 export const MAIN_API_URL =
-  /*   'https://api.movie-searcher.nomoredomainsicu.ru'; */ 'http://localhost:4000';
+  'https://api.movie-searcher.nomoredomainsicu.ru'; /* 'http://localhost:4000'; */
 
 export const MOVIES_API_URL = 'https://api.nomoreparties.co/';
 
