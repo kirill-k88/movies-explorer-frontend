@@ -5,7 +5,6 @@
 @import url(./common-button.css);
 
 body {
-  background-color: #fff;
   color: #000;
   font-family: 'Inter', Arial, sans-serif;
   -webkit-text-size-adjust: 100%;
@@ -14,4 +13,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+}
+
+#root {
+  background-color: #fff;
 }
