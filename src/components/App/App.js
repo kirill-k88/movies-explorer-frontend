@@ -197,6 +197,7 @@ function App() {
             path="/movies"
             element={
               <ProtectedRoute
+                winSize={winSize}
                 element={
                   <Movies
                     headerMenuButtonHandler={headerMenuButtonHandler}
@@ -217,6 +218,7 @@ function App() {
             path="/saved-movies"
             element={
               <ProtectedRoute
+                winSize={winSize}
                 element={
                   <SavedMovies
                     headerMenuButtonHandler={headerMenuButtonHandler}
@@ -234,6 +236,7 @@ function App() {
             path="/profile"
             element={
               <ProtectedRoute
+                winSize={winSize}
                 element={
                   <Profile
                     headerMenuButtonHandler={headerMenuButtonHandler}

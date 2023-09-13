@@ -2,9 +2,9 @@ import { Navigate } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext.js';
 import { useContext } from 'react';
 
-function ProtectedRoute({ element }) {
+function ProtectedRoute({ element, winSize }) {
   const { loggedIn } = useContext(CurrentUserContext);
-  if (loggedIn === undefined) {
+  if (loggedIn === undefined || winSize[0] === 0) {
     return;
   }
   return loggedIn ? (
