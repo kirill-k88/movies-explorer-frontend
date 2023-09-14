@@ -1,0 +1,12 @@
+.common-link {
+  transition: opacity 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.common-link:hover {
+  opacity: 0.7;
+}
+
+.common-link:visited {
+  color: #000;
+}

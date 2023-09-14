@@ -1,0 +1,63 @@
+.header__login-container {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  align-items: center;
+}
+
+.header__button {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+
+  transition: opacity 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.header__button_type_signin {
+  padding: 8px 20px;
+  background-color: #2be080;
+  color: #000;
+  border-radius: 3px;
+}
+
+.header__button_type_signup-black {
+  color: #000;
+}
+.header__button_type_signup-black:visited {
+  color: #000;
+}
+
+.header__button_type_signup-wite {
+  color: #fff;
+}
+.header__button_type_signup-wite:visited {
+  color: #fff;
+}
+
+.header__button:hover {
+  opacity: 0.8;
+}
+
+.header__button_type_signin:visited {
+  color: #000;
+}
+
+@media screen and (max-width: 500px) {
+  .header__login-container {
+    gap: 14px;
+  }
+
+  .header__button {
+    font-size: 10px;
+    line-height: 16px;
+  }
+
+  .header__button_type_signin {
+    padding: 5px 12px;
+  }
+}

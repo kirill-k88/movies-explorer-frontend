@@ -1,0 +1,20 @@
+/* Общие стили */
+@import url(./vendor/normalize.css);
+@import url(./vendor/fonts/Inter/inter.css);
+@import url(./common-link.css);
+@import url(./common-button.css);
+
+body {
+  color: #000;
+  font-family: 'Inter', Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+#root {
+  background-color: #fff;
+}
