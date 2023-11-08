@@ -1,6 +1,8 @@
 # MovieSearcher App
 
 Репозиторий для фронтенда приложения `Movies Searcher`.
+
+Основа: React Create App
 ## Позволяет:
 - Искать фильмы по базе https://api.nomoreparties.co/beatfilm-movies
 - Создавать персональный аккаунт
